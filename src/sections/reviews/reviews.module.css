@@ -1,0 +1,147 @@
+h2,
+h4,
+h3,
+p {
+  text-align: left;
+}
+
+.reviews {
+  margin-left: 390px;
+  margin-top: 130px;
+}
+
+.reviews h2 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  margin-bottom: 30px;
+}
+
+.reviews h3 {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.reviews h4 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 151%;
+  letter-spacing: 0%;
+}
+
+.reviewText {
+  font-size: 16px;
+}
+
+.reviewersPhoto {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.review {
+  display: flex;
+  flex-direction: row;
+}
+
+.reviewContainer {
+  width: 550px;
+}
+
+.shortReview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shortReview h4 {
+  margin: 0px;
+}
+
+.shortReview .stars {
+  margin: 0px;
+}
+
+.reviewDescription,
+.reviewDate {
+  color: #c7c7c7;
+}
+
+.okContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ok {
+  width: 15px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 45px;
+  justify-content: center;
+  align-items: center;
+  width: 1140px;
+}
+
+.buttonArrow {
+  width: 11px;
+  height: 6px;
+  margin: 0px 10px;
+}
+
+.extendInfo {
+  color: #5286ec;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+}
+
+.star {
+  width: 18px;
+  height: 17px;
+  margin-left: 5px;
+}
+
+.line {
+  background-color: #b3b3b3;
+  height: 2px;
+  margin: 15px 0;
+}
+
+.reviewersName {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin: 0px;
+}
+
+.reviewersJob {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 151%;
+  letter-spacing: 0%;
+  margin: 5px 0;
+  color: #8a8a8a;
+}

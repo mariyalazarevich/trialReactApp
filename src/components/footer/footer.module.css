@@ -1,0 +1,88 @@
+.footer {
+  margin-top: 45px;
+  width: 1920px;
+}
+
+.whiteFooter {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  margin-left: 390px;
+  width: 1140px;
+}
+
+.helyflyTitle {
+  width: 129px;
+  height: 23px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 210px;
+}
+
+.vkButton,
+.facebookButton,
+.instagrammButton {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.visaButton,
+.mastercardButton {
+  width: 39px;
+  height: 27px;
+  object-fit: contain;
+}
+
+.languageButton {
+  display: flex;
+  flex-direction: row;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  align-items: center;
+}
+
+.buttonArrow {
+  background-image: url('arrow.svg');
+  width: 11px;
+  height: 6px;
+  margin-left: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.greyFooter {
+  background-color: #faf9f8;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100px;
+}
+
+.greyFooter .buttons {
+  width: 90px;
+  margin-left: 390px;
+}
+
+.rights {
+  color: #b3b3b3;
+  margin-left: 350px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.rights p {
+  margin: 5px 0;
+}

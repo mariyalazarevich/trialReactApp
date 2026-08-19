@@ -1,0 +1,104 @@
+h2,
+h4,
+p {
+  text-align: left;
+}
+
+.aboutOrganizer {
+  margin-left: 390px;
+  width: 1140px;
+  margin-top: 30px;
+}
+
+#line1 {
+  margin-bottom: 40px;
+}
+
+#line2 {
+  margin-top: 50px;
+}
+
+.orgContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.aboutOrganizer h2 {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  text-align: left;
+}
+
+.aboutOrgContainer div {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 151%;
+  letter-spacing: 0%;
+  width: 584px;
+  text-align: left;
+}
+
+.organizer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 270px;
+  margin-left: 150px;
+  width: auto;
+}
+
+.organizer .extendInfo {
+  width: 150px;
+}
+
+.orgImage {
+  width: 139px;
+  height: 139px;
+  border-radius: 69.5px;
+}
+
+.orgName {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin: 0px;
+}
+
+.orgJob {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 151%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin: 0px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  justify-content: start;
+  align-items: center;
+}
+
+.buttonArrow {
+  width: 11px;
+  height: 6px;
+  margin: 0px 10px;
+}
+
+.extendInfo {
+  color: #5286ec;
+  font-weight: 500;
+  line-height: 146%;
+  letter-spacing: 0%;
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  font-size: 14px;
+}

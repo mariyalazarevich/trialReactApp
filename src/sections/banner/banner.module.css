@@ -1,0 +1,108 @@
+h2,
+h1,
+h4,
+p {
+  text-align: left;
+}
+
+.mainPhoto {
+  width: 1916px;
+  height: 840px;
+  margin-left: 2px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.mainSlogan {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: white;
+  width: 887px;
+  margin-left: 390px;
+  margin-top: 286px;
+  position: relative;
+  z-index: 1;
+}
+
+.mainPhoto h1 span {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #fc9b09;
+}
+
+.rectangle {
+  width: 225px;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 390px;
+  color: white;
+  position: relative;
+  z-index: 1;
+  background-image: url('rectangle.png');
+}
+
+.rectangle h4 {
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0%;
+  margin: 0px;
+  height: 19px;
+  color: white;
+  margin-top: 15px;
+}
+
+.rectangle h2 {
+  font-weight: 800;
+  font-size: 35px;
+  letter-spacing: 0%;
+  margin: 0px;
+  height: 36px;
+  color: white;
+}
+
+.rectangleInfo {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  align-items: center;
+}
+
+.rectangleImage {
+  width: 60px;
+  height: 60px;
+}
+
+.toBookButton {
+  width: 304px;
+  height: 68px;
+  background-color: transparent;
+  border: 3px solid white;
+  text-align: center;
+  color: white;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 100%;
+  margin-left: 390px;
+  margin-top: 5px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}

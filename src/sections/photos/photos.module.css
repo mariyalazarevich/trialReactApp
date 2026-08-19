@@ -1,0 +1,62 @@
+h2,
+h4,
+p {
+  text-align: left;
+}
+
+.photos {
+  margin-left: 390px;
+  margin-top: 30px;
+  width: 1140px;
+}
+
+.photosDescription {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 146%;
+  letter-spacing: 0%;
+}
+
+.photosExample {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.photoExample {
+  width: 277px;
+  height: 185px;
+  border-radius: 4px;
+  object-fit: cover;
+  margin: 5px 0px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 45px;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonArrow {
+  background-image: url('/arrow.svg');
+  width: 11px;
+  height: 6px;
+  margin: 0px 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.extendInfo {
+  color: #5286ec;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+}

@@ -1,0 +1,117 @@
+h2,
+h4,
+p {
+  text-align: left;
+}
+
+.mapSection {
+  margin-top: 60px;
+}
+
+.map {
+  height: 510px;
+  width: 1920px;
+  background-image: url('/map.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 20px 0px;
+}
+
+.locationDescription {
+  width: 420px;
+  height: 470px;
+  background-color: white;
+  margin-left: 390px;
+  padding-top: 15px;
+}
+
+.descriptionElements {
+  display: flex;
+  flex-direction: row;
+  margin: 35px 30px;
+  align-items: center;
+}
+
+.descriptionElements h2 {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 151%;
+  letter-spacing: 0%;
+  margin: 0px;
+  margin-bottom: 5px;
+}
+
+.descriptionElements h4 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  margin: 0px;
+}
+
+.number1,
+.number2,
+.number3 {
+  width: 61px;
+  height: 61px;
+  margin-right: 20px;
+}
+
+.photoElement {
+  width: 67px;
+  height: 67px;
+  border-radius: 33.5px;
+  margin-right: 13px;
+  object-fit: cover;
+}
+
+.extendInfo {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0%;
+  text-align: start;
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+  margin-top: 5px;
+  cursor: pointer;
+  color: #5286ec;
+}
+
+.whereQuestion,
+.timeQuestion,
+.freePlaceQuestion {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 151%;
+  letter-spacing: 0%;
+  margin: 0px;
+  margin-bottom: 5px;
+}
+
+.where,
+.time,
+.freePlace {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  margin: 0px;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 151%;
+  letter-spacing: 0%;
+  margin: 0px;
+  margin-bottom: 5px;
+}
+
+.job {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  margin: 0px;
+}

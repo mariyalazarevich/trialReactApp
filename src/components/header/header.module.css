@@ -1,0 +1,27 @@
+header {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  margin-left: 390px;
+}
+
+.helyflyTitle {
+  width: 129px;
+  height: 23px;
+  margin-top: 39px;
+}
+
+.tel {
+  color: #b3b3b3;
+  margin-left: 36px;
+  margin-top: 41px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.telNumber {
+  margin-left: 1px;
+  margin-top: 41px;
+  font-size: 14px;
+  font-weight: 400;
+}
