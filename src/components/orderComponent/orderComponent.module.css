@@ -1,0 +1,136 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding-top: 100px;
+}
+
+.orderComponent {
+  width: 615px;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid var(--grey-color);
+}
+
+.closeButton {
+  background-image: url('Close.svg');
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  margin-left: 15px;
+  cursor: pointer;
+  margin-left: 570px;
+  margin-top: 15px;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 151%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin: 10px 0px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formElement {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-around;
+  margin: 10px 0px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+span {
+  color: var(--red-color);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.inputField {
+  width: 402px;
+  height: 44px;
+  background-color: transparent;
+  border: 1px solid var(--grey-color);
+  border-radius: 3px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: var(--main-grey-text-color);
+  padding-left: 16px;
+}
+
+.inputField::placeholder {
+  color: var(--grey-color);
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardInfo .inputField {
+  width: 192px;
+}
+
+.checkBox {
+  width: 420px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  margin-top: 10px;
+}
+
+.checkBox input {
+  margin-right: 15px;
+  margin-top: 4px;
+  margin-left: 2px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--orange-color);
+  border: none;
+}
+
+.formButton {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.formButton input {
+  background-color: var(--orange-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  width: 390px;
+  height: 70px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+}
