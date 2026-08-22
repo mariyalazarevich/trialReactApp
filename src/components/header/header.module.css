@@ -12,7 +12,7 @@ header {
 }
 
 .tel {
-  color: #b3b3b3;
+  color: var(--dark-grey-colo);
   margin-left: 36px;
   margin-top: 41px;
   font-size: 14px;

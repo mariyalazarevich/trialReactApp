@@ -6,10 +6,16 @@
 
 #line1 {
   margin-bottom: 40px;
+  background-color: var(--grey-color);
+  width: 1140px;
+  height: 2px;
 }
 
 #line2 {
   margin-top: 50px;
+  background-color: var(--grey-color);
+  width: 1140px;
+  height: 2px;
 }
 
 .orgContainer {
@@ -84,15 +90,4 @@
   width: 11px;
   height: 6px;
   margin: 0px 10px;
-}
-
-.extendInfo {
-  color: #5286ec;
-  font-weight: 500;
-  line-height: 146%;
-  letter-spacing: 0%;
-  background-color: transparent;
-  padding: 0px;
-  border: none;
-  font-size: 14px;
 }

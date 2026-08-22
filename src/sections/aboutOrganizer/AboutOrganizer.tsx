@@ -1,10 +1,10 @@
-import { ButtonArrow } from '../../components/buttonArrow/ButtonArrow';
+import { ButtonArrow } from '@components/buttonArrow/ButtonArrow';
 import styles from './aboutOrganizer.module.css';
 
 export const AboutOrganizer = () => {
   return (
     <section className={styles.aboutOrganizer}>
-      <div className={styles.line} id="line1"></div>
+      <div className={styles.line} id={styles.line1}></div>
 
       <div className={styles.orgContainer}>
         <div className={styles.aboutOrgContainer}>
@@ -23,7 +23,9 @@ export const AboutOrganizer = () => {
             </p>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.extendInfo}>Читать еще</button>
+            <button className="extendInfo" style={{ fontSize: '14px', marginLeft: '0px' }}>
+              Читать еще
+            </button>
             <ButtonArrow />
           </div>
 
@@ -36,7 +38,9 @@ export const AboutOrganizer = () => {
             </p>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.extendInfo}>Читать еще</button>
+            <button className="extendInfo" style={{ fontSize: '14px', marginLeft: '0px' }}>
+              Читать еще
+            </button>
             <ButtonArrow />
           </div>
         </div>
@@ -47,11 +51,13 @@ export const AboutOrganizer = () => {
           </div>
           <div className={styles.orgName}>Марина Иванова</div>
           <div className={styles.orgJob}>Фотограф</div>
-          <button className={styles.extendInfo}>Показать больше информации о фотографе</button>
+          <button className="extendInfo" style={{ fontSize: '14px', width: '150px' }}>
+            Показать больше информации о фотографе
+          </button>
         </div>
       </div>
 
-      <div className={styles.line} id="line2"></div>
+      <div className={styles.line} id={styles.line2}></div>
     </section>
   );
 };

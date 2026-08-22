@@ -1,8 +1,8 @@
-import { ButtonArrow } from '../../components/buttonArrow/ButtonArrow';
-import { StarComponent } from '../../components/starComponent/StarComponent';
+import { ButtonArrow } from '@components/buttonArrow/ButtonArrow';
+import { StarComponent } from '@components/starComponent/StarComponent';
 import styles from './reviews.module.css';
 
-const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: styles.star });
+const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: 'star' });
 
 const REVIEWS = [
   {
@@ -53,7 +53,7 @@ export const Reviews = () => {
             <h3 className={styles.reviewersName}>{curReview.reviewersName}</h3>
             <h4 className={styles.reviewersJob}>{curReview.reviewersJob}</h4>
             <div className={styles.shortReview}>
-              <div className={styles.stars}>
+              <div className="stars" style={{ margin: '0px' }}>
                 {STARS.map((star, index) => (
                   <div className={star.class} key={index}>
                     {star.starComponent}
@@ -78,7 +78,7 @@ export const Reviews = () => {
 
       <div className={styles.buttonContainer}>
         <ButtonArrow />
-        <button className={styles.extendInfo}>Показать Все (134)</button>
+        <button className="extendInfo">Показать Все (134)</button>
         <ButtonArrow />
       </div>
     </section>

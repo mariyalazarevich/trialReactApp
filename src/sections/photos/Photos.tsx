@@ -59,7 +59,7 @@ export const Photos = () => {
       </div>
       <div className={styles.buttonContainer}>
         <ButtonArrow />
-        <button className={styles.extendInfo} onClick={showAll}>
+        <button className="extendInfo" onClick={showAll}>
           {isNotAllPhoto ? 'Показать все фото' : 'Cкрыть все фото'}
         </button>
         <ButtonArrow />

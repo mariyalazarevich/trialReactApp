@@ -43,9 +43,7 @@
   margin: 0px;
 }
 
-.number1,
-.number2,
-.number3 {
+.number {
   width: 61px;
   height: 61px;
   margin-right: 20px;
@@ -60,21 +58,10 @@
 }
 
 .extendInfo {
-  font-weight: 500;
   font-size: 14px;
-  letter-spacing: 0%;
-  text-align: start;
-  background-color: transparent;
-  border: none;
-  padding: 0px;
-  margin-top: 5px;
-  cursor: pointer;
-  color: #5286ec;
 }
 
-.whereQuestion,
-.timeQuestion,
-.freePlaceQuestion {
+.question {
   font-weight: 600;
   font-size: 18px;
   line-height: 151%;
@@ -83,9 +70,7 @@
   margin-bottom: 5px;
 }
 
-.where,
-.time,
-.freePlace {
+.answer {
   font-weight: 400;
   font-size: 16px;
   line-height: 146%;

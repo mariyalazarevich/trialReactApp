@@ -16,7 +16,7 @@
 .schedule table {
   width: 770px;
   height: 458px;
-  border: 1px solid #c7c7c7;
+  border: 1px solid var(--grey-color);
   border-collapse: collapse;
 }
 
@@ -30,7 +30,7 @@ td {
 
 td {
   justify-content: space-between;
-  border-top: 1px solid #c7c7c7;
+  border-top: 1px solid var(--grey-color);
 }
 
 .tableMainInfo {
@@ -73,10 +73,10 @@ td span {
 .chooseButton {
   padding: 0px;
   border: none;
-  border: 2px solid #fc9b09;
+  border: 2px solid var(--orange-color);
   width: 130px;
   height: 50px;
-  color: #fc9b09;
+  color: var(--orange-color);
   background-color: transparent;
   font-weight: 500;
   font-size: 14px;
@@ -128,15 +128,4 @@ td span {
   height: 37px;
   margin-top: 20px;
   margin-bottom: 25px;
-}
-
-.stars {
-  display: flex;
-  flex-direction: row;
-  margin-top: 33px;
-}
-
-.star {
-  width: 18px;
-  height: 17px;
 }

@@ -24,6 +24,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --orange-color: #fc9b09;
+
+  --blue-button-color: #5286ec;
+  --blue-focus-button-color: #2a6ae8;
+
+  --light-grey-color: #faf9f8;
+  --grey-color: #c7c7c7;
+  --dark-grey-color: #b3b3b3;
+
+  --main-grey-text-color: #37373f;
+
   @media (max-width: 1024px) {
     font-size: 16px;
   }
@@ -64,12 +75,14 @@ body {
   margin: 0;
 }
 
+h1,
 h2,
 h4,
 h3,
 span,
 p {
   text-align: left;
+  color: var(--main-grey-text-color);
 }
 
 h1,
@@ -114,4 +127,34 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+.extendInfo {
+  color: var(--blue-button-color);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 146%;
+  letter-spacing: 0%;
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+  margin: 0px 5px;
+}
+
+.extendInfo:active {
+  color: var(--blue-focus-button-color);
+  font-weight: 600;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+  margin-top: 33px;
+}
+
+.star {
+  width: 18px;
+  height: 17px;
+  margin: 0px 2px;
 }

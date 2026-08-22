@@ -1,7 +1,7 @@
-import { StarComponent } from '../../components/starComponent/StarComponent';
+import { StarComponent } from '@components/starComponent/StarComponent';
 import styles from './aboutPhotoshoot.module.css';
 
-const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: styles.star });
+const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: 'star' });
 
 export const AboutPhotoshoot = () => {
   return (
@@ -37,7 +37,7 @@ export const AboutPhotoshoot = () => {
             <p className={styles.slogan}>
               Более <span>50</span> отзывов с оценкой
             </p>
-            <div className={styles.stars}>
+            <div className="stars">
               {STARS.map((star, index) => (
                 <div className={star.class} key={index}>
                   {star.starComponent}

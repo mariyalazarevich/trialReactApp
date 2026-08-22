@@ -57,7 +57,7 @@
 }
 
 .rightsFooter {
-  background-color: #faf9f8;
+  background-color: var(--light-grey-color);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -70,7 +70,7 @@
 }
 
 .rights {
-  color: #b3b3b3;
+  color: var(--grey-colo);
   margin-left: 350px;
   font-weight: 400;
   font-size: 14px;
