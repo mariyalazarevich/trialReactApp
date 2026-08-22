@@ -7,9 +7,9 @@ html,
 body {
   margin: 0;
   padding: 0;
-  width: 1920px;
+  width: 100%;
 }
 
 #root {
-  width: 1920px;
+  width: 100%;
 }

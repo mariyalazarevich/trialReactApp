@@ -1,4 +1,7 @@
+import { StarComponent } from '../../components/starComponent/StarComponent';
 import styles from './schedule.module.css';
+
+const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: styles.star });
 
 export const Schedule = () => {
   return (
@@ -38,16 +41,16 @@ export const Schedule = () => {
             <td id={styles.tdSlogan}>
               <div className={styles.sloganContainer}>
                 <div className={styles.reviewsSlogan}>
-                  <div className={styles.reviewIcon}></div>
-                  <h4 className={styles.slogan}>
+                  <img src="cup.svg" alt="cup" className={styles.reviewIcon} />
+                  <p className={styles.slogan}>
                     Более <span>50</span> отзывов с оценкой
-                  </h4>
+                  </p>
                   <div className={styles.stars}>
-                    <div className={styles.star}></div>
-                    <div className={styles.star}></div>
-                    <div className={styles.star}></div>
-                    <div className={styles.star}></div>
-                    <div className={styles.star}></div>
+                    {STARS.map((star, index) => (
+                      <div className={star.class} key={index}>
+                        {star.starComponent}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

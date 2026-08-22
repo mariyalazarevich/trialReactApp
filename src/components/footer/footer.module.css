@@ -3,7 +3,7 @@
   width: 1920px;
 }
 
-.whiteFooter {
+.logoFooter {
   background-color: white;
   display: flex;
   flex-direction: row;
@@ -14,8 +14,8 @@
   width: 1140px;
 }
 
-.helyflyTitle {
-  width: 129px;
+.helyflyLogo {
+  width: 130px;
   height: 23px;
 }
 
@@ -52,16 +52,11 @@
   align-items: center;
 }
 
-.buttonArrow {
-  background-image: url('arrow.svg');
-  width: 11px;
-  height: 6px;
-  margin-left: 5px;
-  background-size: contain;
-  background-repeat: no-repeat;
+.languageButton p {
+  margin-right: 5px;
 }
 
-.greyFooter {
+.rightsFooter {
   background-color: #faf9f8;
   display: flex;
   flex-direction: row;
@@ -69,7 +64,7 @@
   height: 100px;
 }
 
-.greyFooter .buttons {
+.rightsFooter .buttons {
   width: 90px;
   margin-left: 390px;
 }

@@ -17,7 +17,7 @@ export const Banner = () => {
             <h4>Стоимость: </h4>
             <h2>1500₽</h2>
           </div>
-          <img src="percent.png" alt="" className={styles.rectangleImage} />
+          <img src="percent.png" alt="percent" className={styles.rectangleImage} />
         </div>
         <button className={styles.toBookButton}>Забронировать место</button>
       </div>

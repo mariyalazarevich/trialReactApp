@@ -1,9 +1,3 @@
-h2,
-h4,
-p {
-  text-align: left;
-}
-
 .aboutPhotoshoot {
   display: flex;
   flex-direction: row;
@@ -69,7 +63,7 @@ p {
 }
 
 .line {
-  background-color: #c7c7c7;
+  background-color: #b3b3b3;
   height: 2px;
 }
 
@@ -95,6 +89,7 @@ p {
   letter-spacing: 0%;
   margin-top: 30px;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 .reviewsSlogan span {
@@ -115,13 +110,11 @@ p {
   display: flex;
   flex-direction: row;
   margin-top: 33px;
-  margin-left: 10px;
 }
 
 .star {
   width: 18px;
   height: 17px;
-  margin-left: 5px;
 }
 
 .aboutImage {

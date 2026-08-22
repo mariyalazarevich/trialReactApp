@@ -6,31 +6,31 @@ export const Map = () => {
       <div className={styles.map}>
         <div className={styles.locationDescription}>
           <div className={styles.descriptionElements}>
-            <img src="1.svg" alt="" className={styles.number1} />
+            <img src="1.svg" alt="number1" className={styles.number1} />
             <div>
               <h2 className={styles.whereQuestion}>Где встречаемся?</h2>
-              <h4 className={styles.where}>Москва</h4>
+              <p className={styles.where}>Москва</p>
             </div>
           </div>
           <div className={styles.descriptionElements}>
-            <img src="2.svg" alt="" className={styles.number2} />
+            <img src="2.svg" alt="number2" className={styles.number2} />
             <div>
               <h2 className={styles.timeQuestion}>Время съемки</h2>
-              <h4 className={styles.time}>3 часа</h4>
+              <p className={styles.time}>3 часа</p>
             </div>
           </div>
           <div className={styles.descriptionElements}>
-            <img src="3.svg" alt="" className={styles.number3} />
+            <img src="3.svg" alt="number3" className={styles.number3} />
             <div>
               <h2 className={styles.freePlaceQuestion}>Мест осталось:</h2>
-              <h4 className={styles.freePlace}>2 места</h4>
+              <p className={styles.freePlace}>2 места</p>
             </div>
           </div>
           <div className={styles.descriptionElements}>
-            <img src="org_image.png" alt="" className={styles.photoElement} />
+            <img src="org_image.png" alt="org_image" className={styles.photoElement} />
             <div>
               <h2 className={styles.name}>Мария Иванова</h2>
-              <h4 className={styles.job}>Фотограф</h4>
+              <p className={styles.job}>Фотограф</p>
               <button className={styles.extendInfo}>Показать больше информации</button>
             </div>
           </div>

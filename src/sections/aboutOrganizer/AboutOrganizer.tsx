@@ -1,3 +1,4 @@
+import { ButtonArrow } from '../../components/buttonArrow/ButtonArrow';
 import styles from './aboutOrganizer.module.css';
 
 export const AboutOrganizer = () => {
@@ -23,7 +24,7 @@ export const AboutOrganizer = () => {
           </div>
           <div className={styles.buttonContainer}>
             <button className={styles.extendInfo}>Читать еще</button>
-            <img className={styles.buttonArrow} src="/arrow.svg" alt="" />
+            <ButtonArrow />
           </div>
 
           <h2>Что я предоставлю:</h2>
@@ -36,13 +37,13 @@ export const AboutOrganizer = () => {
           </div>
           <div className={styles.buttonContainer}>
             <button className={styles.extendInfo}>Читать еще</button>
-            <img className={styles.buttonArrow} src="/arrow.svg" alt="" />
+            <ButtonArrow />
           </div>
         </div>
 
         <div className={styles.organizer}>
           <div className={styles.orgImage}>
-            <img src="/org_image.png" alt="" />
+            <img src="/org_image.png" alt="org-image" />
           </div>
           <div className={styles.orgName}>Марина Иванова</div>
           <div className={styles.orgJob}>Фотограф</div>
