@@ -2,20 +2,29 @@
   margin-left: 390px;
   width: 1140px;
   margin-top: 30px;
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 10px;
 }
 
-#line1 {
-  margin-bottom: 40px;
-  background-color: var(--grey-color);
-  width: 1140px;
+.aboutOrganizer::before {
+  width: 100%;
   height: 2px;
+  background-color: var(--grey-color);
+  content: '';
+  left: 0;
+  top: 0;
+  position: absolute;
 }
 
-#line2 {
-  margin-top: 50px;
-  background-color: var(--grey-color);
-  width: 1140px;
+.aboutOrganizer::after {
+  width: 100%;
   height: 2px;
+  background-color: var(--grey-color);
+  content: '';
+  left: 0;
+  bottom: 0;
+  position: absolute;
 }
 
 .orgContainer {

@@ -4,8 +4,6 @@ import styles from './aboutOrganizer.module.css';
 export const AboutOrganizer = () => {
   return (
     <section className={styles.aboutOrganizer}>
-      <div className={styles.line} id={styles.line1}></div>
-
       <div className={styles.orgContainer}>
         <div className={styles.aboutOrgContainer}>
           <h2>Об организаторе:</h2>
@@ -56,8 +54,6 @@ export const AboutOrganizer = () => {
           </button>
         </div>
       </div>
-
-      <div className={styles.line} id={styles.line2}></div>
     </section>
   );
 };

@@ -62,16 +62,29 @@
   height: 37px;
 }
 
-.line {
-  height: 2px;
-  background-color: var(--grey-color);
-  width: 570px;
+.sloganContainer {
+  position: relative;
+  margin-top: 30px;
 }
 
-.sloganContainer {
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
+.sloganContainer::before {
+  width: 100%;
+  height: 2px;
+  background-color: var(--grey-color);
+  content: '';
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+
+.sloganContainer::after {
+  width: 100%;
+  height: 2px;
+  background-color: var(--grey-color);
+  content: '';
+  left: 0;
+  bottom: 0;
+  position: absolute;
 }
 
 .reviewsSlogan {

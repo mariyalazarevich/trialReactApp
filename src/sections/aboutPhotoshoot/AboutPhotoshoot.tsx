@@ -31,7 +31,6 @@ export const AboutPhotoshoot = () => {
           </li>
         </ul>
         <div className={styles.sloganContainer}>
-          <div className={styles.line}></div>
           <div className={styles.reviewsSlogan}>
             <img src="cup.svg" alt="cup" className={styles.reviewIcon} />
             <p className={styles.slogan}>
@@ -45,7 +44,6 @@ export const AboutPhotoshoot = () => {
               ))}
             </div>
           </div>
-          <div className={styles.line}></div>
         </div>
       </div>
       <img src="photo1.png" alt="photo" className={styles.aboutImage} />

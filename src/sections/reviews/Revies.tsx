@@ -71,7 +71,6 @@ export const Reviews = () => {
             </div>
             <p className={styles.reviewText}>{curReview.reviewText}</p>
             <h4 className={styles.reviewDate}>{curReview.reviewDate}</h4>
-            <div className={styles.line}></div>
           </div>
         </div>
       ))}

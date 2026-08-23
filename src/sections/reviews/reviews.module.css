@@ -44,6 +44,19 @@
 
 .reviewContainer {
   width: 550px;
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.reviewContainer::after {
+  width: 100%;
+  height: 2px;
+  background-color: var(--grey-color);
+  content: '';
+  left: 0;
+  bottom: 0;
+  position: absolute;
 }
 
 .shortReview {
@@ -78,7 +91,7 @@
 .buttonContainer {
   display: flex;
   flex-direction: row;
-  margin-top: 45px;
+  margin-top: 25px;
   justify-content: center;
   align-items: center;
   width: 1140px;
@@ -88,12 +101,6 @@
   width: 11px;
   height: 6px;
   margin: 0px 10px;
-}
-
-.line {
-  background-color: var(--grey-color);
-  height: 2px;
-  margin: 15px 0;
 }
 
 .reviewersName {
