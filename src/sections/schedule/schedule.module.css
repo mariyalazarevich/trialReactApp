@@ -85,6 +85,11 @@ td span {
   cursor: pointer;
 }
 
+.chooseButton:active {
+  background-color: var(--orange-color);
+  color: white;
+}
+
 #tdSlogan {
   padding: 0px 30px;
   border-top: none;

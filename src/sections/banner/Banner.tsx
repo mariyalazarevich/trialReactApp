@@ -1,6 +1,18 @@
+import { useState } from 'react';
 import styles from './banner.module.css';
+import { OrderComponent } from '@components/orderComponent/OrderComponent';
 
 export const Banner = () => {
+  const [isModalOen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section className={styles.banner}>
       <div className={styles.mainPhoto}>
@@ -19,7 +31,10 @@ export const Banner = () => {
           </div>
           <img src="percent.png" alt="percent" className={styles.rectangleImage} />
         </div>
-        <button className={styles.toBookButton}>Забронировать место</button>
+        <button className={styles.toBookButton} onClick={openModal}>
+          Забронировать место
+        </button>
+        <OrderComponent isOpen={isModalOen} onClose={closeModal}></OrderComponent>
       </div>
     </section>
   );

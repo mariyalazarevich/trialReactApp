@@ -99,3 +99,8 @@
   z-index: 1;
   cursor: pointer;
 }
+
+.toBookButton:active {
+  color: var(--orange-color);
+  border-color: var(--orange-color);
+}

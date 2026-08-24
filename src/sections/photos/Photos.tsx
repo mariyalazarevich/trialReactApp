@@ -2,8 +2,8 @@ import { ButtonArrow } from '../../components/buttonArrow/ButtonArrow';
 import styles from './photos.module.css';
 import { useEffect, useState } from 'react';
 
-const PHOTOS = [2, 3, 1, 4, 1, 4, 3, 1].map(photoNumber => `photo${photoNumber}.png`);
-const BASIC_PHOTOS = PHOTOS.slice(0, 2);
+const PHOTOS = [2, 3, 1, 4, 1, 4, 2, 3, 2, 3, 4, 1].map(photoNumber => `photo${photoNumber}.png`);
+const BASIC_PHOTOS = PHOTOS.slice(0, 4);
 
 const getAllPhotos = (): Promise<Array<string>> => {
   return new Promise(resolve =>
@@ -18,25 +18,26 @@ export const Photos = () => {
 
   const isNotAllPhoto = photosToShow.length < PHOTOS.length;
 
-  const [allPhotosByRequest, setAllPhotoByRequest] = useState<Array<string> | undefined>();
+  const [allPhotosByRequest, setAllPhotoByRequest] = useState<Array<string>>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const showAll = async () => {
+  const showPhotos = async () => {
+    console.log(isNotAllPhoto);
     if (isNotAllPhoto) {
-      if (!allPhotosByRequest) {
+      if (allPhotosByRequest.length === 0) {
+        console.log(allPhotosByRequest.length);
         setIsLoading(true);
         setAllPhotoByRequest(await getAllPhotos());
-      } else {
-        setPhotosToShow(allPhotosByRequest);
       }
+      setPhotosToShow(allPhotosByRequest);
     } else {
       setPhotosToShow(BASIC_PHOTOS);
     }
   };
 
   useEffect(() => {
-    if (isNotAllPhoto && allPhotosByRequest && photosToShow !== allPhotosByRequest) {
+    if (allPhotosByRequest.length != 0 && isNotAllPhoto) {
       setPhotosToShow(allPhotosByRequest);
       setIsLoading(false);
     }
@@ -59,7 +60,7 @@ export const Photos = () => {
       </div>
       <div className={styles.buttonContainer}>
         <ButtonArrow />
-        <button className="extendInfo" onClick={showAll}>
+        <button className="extendInfo" onClick={showPhotos}>
           {isNotAllPhoto ? 'Показать все фото' : 'Cкрыть все фото'}
         </button>
         <ButtonArrow />

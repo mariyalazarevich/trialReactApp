@@ -1,5 +1,7 @@
 import { StarComponent } from '@components/starComponent/StarComponent';
 import styles from './schedule.module.css';
+import { useState } from 'react';
+import { OrderComponent } from '@components/orderComponent/OrderComponent';
 
 const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: 'star' });
 
@@ -19,6 +21,16 @@ const FREE_PLACES = [
 ];
 
 export const Schedule = () => {
+  const [isModalOen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section className={styles.schedule}>
       <h2>Доступная съемка в ближайшее время:</h2>
@@ -42,7 +54,9 @@ export const Schedule = () => {
                   <span className={styles.photoshootPrice}>{place.price}</span>
                   <h4 className={styles.photoshootFreeSlots}>{place.freePlaces}</h4>
                 </div>
-                <button className={styles.chooseButton}>Выбрать</button>
+                <button className={styles.chooseButton} onClick={openModal}>
+                  Выбрать
+                </button>
               </td>
             </tr>
           ))}
@@ -67,6 +81,7 @@ export const Schedule = () => {
           </tr>
         </tbody>
       </table>
+      <OrderComponent isOpen={isModalOen} onClose={closeModal}></OrderComponent>
     </section>
   );
 };

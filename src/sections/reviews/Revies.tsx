@@ -1,6 +1,7 @@
 import { ButtonArrow } from '@components/buttonArrow/ButtonArrow';
 import { StarComponent } from '@components/starComponent/StarComponent';
 import styles from './reviews.module.css';
+import { useState } from 'react';
 
 const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: 'star' });
 
@@ -37,12 +38,26 @@ const REVIEWS = [
   },
 ];
 
+const BASE_REVIEWS = REVIEWS.slice(0, 1);
+
 export const Reviews = () => {
+  const [reviewsToShow, setReviewsToShow] = useState(BASE_REVIEWS);
+
+  const notAllReviews = reviewsToShow.length < REVIEWS.length;
+
+  const showReviews = () => {
+    if (notAllReviews) {
+      setReviewsToShow(REVIEWS);
+    } else {
+      setReviewsToShow(BASE_REVIEWS);
+    }
+  };
+
   return (
     <section className={styles.reviews}>
       <h2>Отзывы:</h2>
 
-      {REVIEWS.map((curReview, index) => (
+      {reviewsToShow.map((curReview, index) => (
         <div className={styles.review} key={curReview.reviewersName + index}>
           <img
             src={curReview.reviewersPhoto}
@@ -77,7 +92,9 @@ export const Reviews = () => {
 
       <div className={styles.buttonContainer}>
         <ButtonArrow />
-        <button className="extendInfo">Показать Все (134)</button>
+        <button className="extendInfo" onClick={showReviews}>
+          {notAllReviews ? 'Показать Все (3)' : 'Скрыть'}
+        </button>
         <ButtonArrow />
       </div>
     </section>

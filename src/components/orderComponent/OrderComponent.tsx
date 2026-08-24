@@ -28,11 +28,14 @@ const FORM_ELEMENTS = [
   },
 ];
 
-export const OrderComponent = () => {
+export const OrderComponent = (props: { isOpen: boolean; onClose: () => void }) => {
+  const { isOpen, onClose } = props;
+
+  if (!isOpen) return null;
   return (
     <div className={styles.container}>
       <div className={styles.orderComponent}>
-        <button className={styles.closeButton}></button>
+        <button className={styles.closeButton} onClick={onClose}></button>
         <h1>Бронирование</h1>
         <form>
           {FORM_ELEMENTS.map((element, index) => (
@@ -45,6 +48,7 @@ export const OrderComponent = () => {
                 type={element.type}
                 className={styles.inputField}
                 placeholder={element.placeholder}
+                required
               />
             </div>
           ))}
@@ -52,15 +56,20 @@ export const OrderComponent = () => {
             <label className={styles.label}>
               Данные карты<span>*</span>
             </label>
-            <input type="number" className={styles.inputField} placeholder="Номер карты" />
+            <input type="number" className={styles.inputField} placeholder="Номер карты" required />
             <div className={styles.cardInfo}>
-              <input type="number" className={styles.inputField} placeholder="Срок действия" />
-              <input type="text" className={styles.inputField} placeholder="CVV" />
+              <input
+                type="number"
+                className={styles.inputField}
+                placeholder="Срок действия"
+                required
+              />
+              <input type="text" className={styles.inputField} placeholder="CVV" required />
             </div>
           </div>
 
           <div className={styles.checkBox}>
-            <input type="checkbox" />
+            <input type="checkbox" required />
             <label> Я согласен с пользовательским соглашением и публичной офертой</label>
           </div>
 
