@@ -2,6 +2,7 @@ import type { ComponentType } from 'react';
 import './App.css';
 import { Main } from './pages/MainPage/Main';
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary';
+import { ShowInfoProvider } from './contexts/showInfoContext';
 
 interface ErrorFallbackProps {
   error: Error;
@@ -29,7 +30,9 @@ function App() {
         /* Reset logic like cache clearance goes here */
       }}
     >
-      <Main />
+      <ShowInfoProvider>
+        <Main />
+      </ShowInfoProvider>
     </ErrorBoundary>
   );
 }

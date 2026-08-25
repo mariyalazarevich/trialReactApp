@@ -1,7 +1,8 @@
 import { ButtonArrow } from '@components/buttonArrow/ButtonArrow';
 import styles from './aboutOrganizer.module.css';
 import { useShowInfo } from 'src/hooks/useShowInfoHook';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { IShowInfoContext } from 'src/contexts/showInfoContext';
 
 const ORGANIZER_DESCRIPTION = {
   aboutOrganizer:
@@ -18,17 +19,30 @@ const getButtonLabel = (isOpen: boolean): string => {
   return isOpen ? 'Скрыть информацию' : 'Читать еще';
 };
 
-export const AboutOrganizer = () => {
+export const AboutOrganizer: React.FC<IShowInfoContext> = ({
+  isInformationOpen,
+  toggleAboutOrganizer,
+  toggleWhatIProvide,
+  showAllInfo,
+  closeAllInfo,
+  isAllOpen,
+  setRef,
+}) => {
   const refAboutOrganizer = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (refAboutOrganizer.current) {
+      setRef(refAboutOrganizer);
+    }
+  }, [refAboutOrganizer.current, setRef]); //добавить showAllInfo в map.tsx
 
-  const {
-    isInformationOpen,
-    toggleAboutOrganizer,
-    toggleWhatIProvide,
-    showAllInfo,
-    closeAllInfo,
-    isAllOpen,
-  } = useShowInfo(refAboutOrganizer);
+  // const {
+  //   isInformationOpen,
+  //   toggleAboutOrganizer,
+  //   toggleWhatIProvide,
+  //   showAllInfo,
+  //   closeAllInfo,
+  //   isAllOpen,
+  // } = useShowInfo(refAboutOrganizer);
 
   return (
     <section className={styles.aboutOrganizer} ref={refAboutOrganizer}>

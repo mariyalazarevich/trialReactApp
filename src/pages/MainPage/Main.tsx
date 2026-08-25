@@ -7,6 +7,7 @@ import { Map } from '@sections/map/Map';
 import { Photos } from '@sections/photos/Photos';
 import { Reviews } from '@sections/reviews/Revies';
 import { Schedule } from '@sections/schedule/Schedule';
+import { ShowInfoContext } from 'src/contexts/showInfoContext';
 
 export const Main = () => {
   return (
@@ -15,9 +16,13 @@ export const Main = () => {
       <Banner></Banner>
       <AboutPhotoshoot></AboutPhotoshoot>
       <Photos></Photos>
-      <AboutOrganizer></AboutOrganizer>
+      <ShowInfoContext.Consumer>
+        <AboutOrganizer></AboutOrganizer>
+      </ShowInfoContext.Consumer>
       <Schedule></Schedule>
-      <Map></Map>
+      <ShowInfoContext.Consumer>
+        <Map></Map>
+      </ShowInfoContext.Consumer>
       <Reviews></Reviews>
       <Footer></Footer>
     </>
