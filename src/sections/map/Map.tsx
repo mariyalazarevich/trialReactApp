@@ -18,7 +18,7 @@ const LOCATION = [
   },
 ];
 
-export const Map = () => {
+export const Map = (/* { showInfo }: { showInfo: () => void } */) => {
   return (
     <section className={styles.mapSection}>
       <div className={styles.map}>
@@ -41,7 +41,12 @@ export const Map = () => {
             <div>
               <h2 className={styles.name}>Мария Иванова</h2>
               <p className={styles.job}>Фотограф</p>
-              <button className="extendInfo" style={{ fontSize: '14px', marginLeft: '0px' }}>
+              <button
+                className="extendInfo"
+                style={{ fontSize: '14px', marginLeft: '0px' }}
+                /* onClick={showInfo} */
+              >
+                {' '}
                 Показать больше информации
               </button>
             </div>

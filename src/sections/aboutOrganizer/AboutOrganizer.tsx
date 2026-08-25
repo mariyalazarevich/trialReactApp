@@ -1,6 +1,7 @@
 import { ButtonArrow } from '@components/buttonArrow/ButtonArrow';
 import styles from './aboutOrganizer.module.css';
-import { useState } from 'react';
+import { useShowInfo } from 'src/hooks/useShowInfoHook';
+import { useRef } from 'react';
 
 const ORGANIZER_DESCRIPTION = {
   aboutOrganizer:
@@ -13,80 +14,56 @@ const ORGANIZER_DESCRIPTION = {
     'А также обеспечу полную координацию с пилотом для поиска идеального ракурса с воздуха: мы заранее обсудим схему полета, чтобы поймать нужный свет и драматичные виды сверху. Помимо этого, я беру на себя всю «земную» подготовку для «небесной» съемки: помогу подобрать правильную одежду, которая не будет развеваться в потоке воздуха, и скоординирую время вылета с вашим графиком отдыха.',
 };
 
-export const AboutOrganizer = () => {
-  const [information, setInformation] = useState({
-    ...ORGANIZER_DESCRIPTION,
-    aboutOrganizerMore: '',
-    whatIProvideMore: '',
-  });
-  const [buttonTexts, setButtonTexts] = useState({
-    aboutOrganizerButton: 'Читать еще',
-    whatIProvideButton: 'Читать еще',
-    moreInfoAboutOrgButton: 'Показать больше информации о фотографе',
-  });
+const getButtonLabel = (isOpen: boolean): string => {
+  return isOpen ? 'Скрыть информацию' : 'Читать еще';
+};
 
-  const showInfo = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const buttonId = e.currentTarget.id;
-    if (buttonId === 'aboutOrganizerButton') {
-      if (information.aboutOrganizerMore === '') {
-        setInformation({
-          ...information,
-          aboutOrganizerMore: ORGANIZER_DESCRIPTION.aboutOrganizerMore,
-        });
-        setButtonTexts({ ...buttonTexts, aboutOrganizerButton: 'Скрыть информацию' });
-      } else {
-        setInformation({ ...information, aboutOrganizerMore: '' });
-        setButtonTexts({ ...buttonTexts, aboutOrganizerButton: 'Читать еще' });
-      }
-    }
-    if (buttonId === 'whatIProvideButton') {
-      if (information.whatIProvideMore === '') {
-        setInformation({
-          ...information,
-          whatIProvideMore: ORGANIZER_DESCRIPTION.whatIProvideMore,
-        });
-        setButtonTexts({ ...buttonTexts, whatIProvideButton: 'Скрыть информацию' });
-      } else {
-        setInformation({ ...information, whatIProvideMore: '' });
-        setButtonTexts({ ...buttonTexts, whatIProvideButton: 'Читать еще' });
-      }
-    }
-  };
+export const AboutOrganizer = () => {
+  const refAboutOrganizer = useRef<HTMLElement>(null);
+
+  const {
+    isInformationOpen,
+    toggleAboutOrganizer,
+    toggleWhatIProvide,
+    showAllInfo,
+    closeAllInfo,
+    isAllOpen,
+  } = useShowInfo(refAboutOrganizer);
 
   return (
-    <section className={styles.aboutOrganizer}>
+    <section className={styles.aboutOrganizer} ref={refAboutOrganizer}>
       <div className={styles.orgContainer}>
         <div className={styles.aboutOrgContainer}>
           <h2>Об организаторе:</h2>
           <div>
-            <p>{information.aboutOrganizer}</p>
-            <p>{information.aboutOrganizerMore}</p>
+            <p>{ORGANIZER_DESCRIPTION.aboutOrganizer}</p>
+            {isInformationOpen.aboutOrganizer && <p>{ORGANIZER_DESCRIPTION.aboutOrganizerMore}</p>}
           </div>
           <div className={styles.buttonContainer}>
             <button
               className="extendInfo"
               style={{ fontSize: '14px', marginLeft: '0px' }}
-              onClick={showInfo}
+              onClick={toggleAboutOrganizer}
               id="aboutOrganizerButton"
             >
-              {buttonTexts.aboutOrganizerButton}
+              {getButtonLabel(isInformationOpen.aboutOrganizer)}
             </button>
             <ButtonArrow />
           </div>
 
           <h2>Что я предоставлю:</h2>
           <div>
-            <p>{information.whatIProvide} </p>
-            <p>{information.whatIProvideMore}</p>
+            <p>{ORGANIZER_DESCRIPTION.whatIProvide}</p>
+            {isInformationOpen.whatIProvide && <p>{ORGANIZER_DESCRIPTION.whatIProvideMore}</p>}
           </div>
           <div className={styles.buttonContainer}>
             <button
               className="extendInfo"
               style={{ fontSize: '14px', marginLeft: '0px' }}
-              onClick={showInfo}
+              onClick={toggleWhatIProvide}
               id="whatIProvideButton"
             >
-              {buttonTexts.whatIProvideButton}
+              {getButtonLabel(isInformationOpen.whatIProvide)}
             </button>
             <ButtonArrow />
           </div>
@@ -102,8 +79,9 @@ export const AboutOrganizer = () => {
             className="extendInfo"
             style={{ fontSize: '14px', width: '150px' }}
             id="moreInfoAboutOrgButton"
+            onClick={isAllOpen ? closeAllInfo : showAllInfo}
           >
-            {buttonTexts.moreInfoAboutOrgButton}
+            {isAllOpen ? 'Скрыть информацию' : 'Показать информацию о фотографе'}
           </button>
         </div>
       </div>
