@@ -1,6 +1,5 @@
 import { ButtonArrow } from '@components/buttonArrow/ButtonArrow';
 import styles from './aboutOrganizer.module.css';
-import { useShowInfo } from 'src/hooks/useShowInfoHook';
 import { useEffect, useRef } from 'react';
 import { IShowInfoContext } from 'src/contexts/showInfoContext';
 
@@ -28,21 +27,12 @@ export const AboutOrganizer: React.FC<IShowInfoContext> = ({
   isAllOpen,
   setRef,
 }) => {
-  const refAboutOrganizer = useRef<HTMLElement>(null);
+  const refAboutOrganizer = useRef<HTMLElement | null>(null);
   useEffect(() => {
     if (refAboutOrganizer.current) {
-      setRef(refAboutOrganizer);
+      setRef(refAboutOrganizer as React.RefObject<HTMLElement>);
     }
-  }, [refAboutOrganizer.current, setRef]); //добавить showAllInfo в map.tsx
-
-  // const {
-  //   isInformationOpen,
-  //   toggleAboutOrganizer,
-  //   toggleWhatIProvide,
-  //   showAllInfo,
-  //   closeAllInfo,
-  //   isAllOpen,
-  // } = useShowInfo(refAboutOrganizer);
+  }, [setRef]);
 
   return (
     <section className={styles.aboutOrganizer} ref={refAboutOrganizer}>

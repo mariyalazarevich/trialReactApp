@@ -1,3 +1,4 @@
+import { IShowInfoContext } from 'src/contexts/showInfoContext';
 import styles from './map.module.css';
 
 const LOCATION = [
@@ -18,7 +19,7 @@ const LOCATION = [
   },
 ];
 
-export const Map = (/* { showInfo }: { showInfo: () => void } */) => {
+export const Map: React.FC<IShowInfoContext> = ({ showAllInfo }) => {
   return (
     <section className={styles.mapSection}>
       <div className={styles.map}>
@@ -44,7 +45,7 @@ export const Map = (/* { showInfo }: { showInfo: () => void } */) => {
               <button
                 className="extendInfo"
                 style={{ fontSize: '14px', marginLeft: '0px' }}
-                /* onClick={showInfo} */
+                onClick={showAllInfo}
               >
                 {' '}
                 Показать больше информации

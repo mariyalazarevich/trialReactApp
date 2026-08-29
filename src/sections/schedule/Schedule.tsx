@@ -3,8 +3,6 @@ import styles from './schedule.module.css';
 import { useState } from 'react';
 import { OrderComponent } from '@components/orderComponent/OrderComponent';
 
-const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: 'star' });
-
 const DATE = { day: 'Пятница', span: '14', month: 'сентября' };
 
 const FREE_PLACES = [
@@ -69,11 +67,7 @@ export const Schedule = () => {
                     Более <span>50</span> отзывов с оценкой
                   </p>
                   <div className="stars">
-                    {STARS.map((star, index) => (
-                      <div className={star.class} key={index}>
-                        {star.starComponent}
-                      </div>
-                    ))}
+                    <StarComponent />
                   </div>
                 </div>
               </div>

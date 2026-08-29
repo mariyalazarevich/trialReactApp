@@ -3,8 +3,6 @@ import { StarComponent } from '@components/starComponent/StarComponent';
 import styles from './reviews.module.css';
 import { useState } from 'react';
 
-const STARS = new Array(5).fill({ starComponent: <StarComponent />, class: 'star' });
-
 const REVIEWS = [
   {
     reviewersPhoto: 'rev1.png',
@@ -14,7 +12,7 @@ const REVIEWS = [
     reviewDescription: 'Супер! Я бы заказал съемку снова!',
     reviewText:
       'Хотим выразить огромную благодарность вашей компании! Получили море ощущений, все прошло просто замечательно. Фотки получились великолепные, отдельное спасибо фотографу!',
-    reviewDate: '27 Апреля, 2019г.',
+    reviewDate: new Date('2019-04-27'),
   },
   {
     reviewersPhoto: 'rev2.png',
@@ -24,7 +22,7 @@ const REVIEWS = [
     reviewDescription: 'Супер! Я бы заказал съемку снова!',
     reviewText:
       'Восторг! :) Очень понравилось :) Захватили последний теплый, солнечный октябрьский день :) Впечатлило всё: сам вертолет, взлет, полёт, приземление. Организация полёта отличная.',
-    reviewDate: '19 Апреля, 2019г.',
+    reviewDate: new Date('2019-04-19'),
   },
   {
     reviewersPhoto: 'rev3.png',
@@ -34,9 +32,32 @@ const REVIEWS = [
     reviewDescription: 'Супер! Я бы заказал съемку снова!',
     reviewText:
       'Круто-круто-круто!!! Отмечали мой ДэРэ. Отлично провели время!!! Кстати закуски были вкусными и сытными))Мы с собой ничего не брали. Сами много фоткались,поэтому воспоминания обалденные!!!)) А еще нам всем напечатали по сертификату воздухоплавателя, правда некоторые ленятся за ним съездить))) Но все равно приятно. Короче, Презентстар – проверено. Оценка: пять!',
-    reviewDate: '11 Апреля, 2019г.',
+    reviewDate: new Date('2019-04-11'),
   },
 ];
+
+const MONTHS = [
+  'января',
+  'февраля',
+  'марта',
+  'апреля',
+  'мая',
+  'июня',
+  'июля',
+  'августа',
+  'сентября',
+  'октября',
+  'ноября',
+  'декабря',
+];
+
+const dateToString = (date: Date) => {
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const month = MONTHS[date.getMonth()];
+  const fullDate = `${day} ${month}, ${year}г.`;
+  return fullDate;
+};
 
 const BASE_REVIEWS = REVIEWS.slice(0, 1);
 
@@ -69,11 +90,7 @@ export const Reviews = () => {
             <h4 className={styles.reviewersJob}>{curReview.reviewersJob}</h4>
             <div className={styles.shortReview}>
               <div className="stars" style={{ margin: '0px' }}>
-                {STARS.map((star, index) => (
-                  <div className={star.class} key={index}>
-                    {star.starComponent}
-                  </div>
-                ))}
+                <StarComponent />
               </div>
               <div className={styles.shortReviewContainer}>
                 <img
@@ -85,7 +102,7 @@ export const Reviews = () => {
               </div>
             </div>
             <p className={styles.reviewText}>{curReview.reviewText}</p>
-            <h4 className={styles.reviewDate}>{curReview.reviewDate}</h4>
+            <h4 className={styles.reviewDate}>{dateToString(curReview.reviewDate)}</h4>
           </div>
         </div>
       ))}
