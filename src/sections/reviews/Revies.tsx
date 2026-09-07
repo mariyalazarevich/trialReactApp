@@ -2,6 +2,8 @@ import { ButtonArrow } from '@components/buttonArrow/ButtonArrow';
 import { StarComponent } from '@components/starComponent/StarComponent';
 import styles from './reviews.module.css';
 import { useState } from 'react';
+import { format, setDefaultOptions } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 const REVIEWS = [
   {
@@ -36,26 +38,32 @@ const REVIEWS = [
   },
 ];
 
-const MONTHS = [
-  'января',
-  'февраля',
-  'марта',
-  'апреля',
-  'мая',
-  'июня',
-  'июля',
-  'августа',
-  'сентября',
-  'октября',
-  'ноября',
-  'декабря',
-];
+// const MONTHS = [
+//   'января',
+//   'февраля',
+//   'марта',
+//   'апреля',
+//   'мая',
+//   'июня',
+//   'июля',
+//   'августа',
+//   'сентября',
+//   'октября',
+//   'ноября',
+//   'декабря',
+// ];
 
 const dateToString = (date: Date) => {
-  const day = date.getDate();
-  const year = date.getFullYear();
-  const month = MONTHS[date.getMonth()];
-  const fullDate = `${day} ${month}, ${year}г.`;
+  // const day = date.getDate();
+  // const year = date.getFullYear();
+  // const month = MONTHS[date.getMonth()];
+  setDefaultOptions({ locale: ru });
+  const fullDate = format(date, 'dd MMMM, yyyy г.');
+  console.log(format(date, 'dd MMMM, yyyy г.'));
+  // const start = performance.now();
+  // const dates = Array(100000).fill((Date.now() + Math.random() * 10000000).toFixed());
+  // const collator = new Intl.Collator('en-US', { numeric: true });
+  // console.log(dates.sort(), performance.now() - start);
   return fullDate;
 };
 

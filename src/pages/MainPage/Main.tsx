@@ -16,13 +16,9 @@ export const Main = () => {
       <Banner></Banner>
       <AboutPhotoshoot></AboutPhotoshoot>
       <Photos></Photos>
-      <ShowInfoContext.Consumer>
-        <AboutOrganizer></AboutOrganizer>
-      </ShowInfoContext.Consumer>
+      <ShowInfoContext.Consumer>{value => <AboutOrganizer {...value} />}</ShowInfoContext.Consumer>
       <Schedule></Schedule>
-      <ShowInfoContext.Consumer>
-        <Map></Map>
-      </ShowInfoContext.Consumer>
+      <ShowInfoContext.Consumer>{value => <Map {...value} />}</ShowInfoContext.Consumer>
       <Reviews></Reviews>
       <Footer></Footer>
     </>

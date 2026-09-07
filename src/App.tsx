@@ -3,6 +3,8 @@ import './App.css';
 import { Main } from './pages/MainPage/Main';
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary';
 import { ShowInfoProvider } from './contexts/showInfoContext';
+import { Route, Routes, BrowserRouter } from 'react-router';
+import { Order } from './pages/OrderPage/Order';
 
 interface ErrorFallbackProps {
   error: Error;
@@ -31,7 +33,12 @@ function App() {
       }}
     >
       <ShowInfoProvider>
-        <Main />
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<Main />}></Route>
+            <Route path="order" element={<Order />}></Route>
+          </Routes>
+        </BrowserRouter>
       </ShowInfoProvider>
     </ErrorBoundary>
   );

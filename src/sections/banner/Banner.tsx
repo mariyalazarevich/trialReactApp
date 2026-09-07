@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './banner.module.css';
 import { OrderComponent } from '@components/orderComponent/OrderComponent';
+import { Link } from 'react-router';
 
 export const Banner = () => {
   const [isModalOen, setIsModalOpen] = useState(false);
@@ -34,6 +35,9 @@ export const Banner = () => {
         <button className={styles.toBookButton} onClick={openModal}>
           Забронировать место
         </button>
+        <Link to="order">
+          <button className={styles.toBookButton}>Перейти на бронирование</button>
+        </Link>
         <OrderComponent isOpen={isModalOen} onClose={closeModal}></OrderComponent>
       </div>
     </section>

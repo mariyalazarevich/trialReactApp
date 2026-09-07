@@ -10,7 +10,16 @@ export interface IShowInfoContext {
   setRef: (ref: React.RefObject<HTMLElement> | null) => void;
 }
 
-export const ShowInfoContext = createContext<IShowInfoContext | undefined>(undefined);
+export const ShowInfoContext = createContext<IShowInfoContext>({
+  isInformationOpen: { aboutOrganizer: false, whatIProvide: false },
+  toggleAboutOrganizer: () => {},
+  toggleWhatIProvide: () => {},
+  showAllInfo: () => {},
+  closeAllInfo: () => {},
+  isAllOpen: false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setRef: (ref: React.RefObject<HTMLElement> | null) => {},
+});
 
 export const ShowInfoProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isInformationOpen, setIsInformationOpen] = useState({

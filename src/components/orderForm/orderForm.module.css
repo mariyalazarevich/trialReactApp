@@ -1,0 +1,123 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formElement {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-around;
+  margin: 10px 0px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.label span {
+  color: var(--red-color);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.inputField {
+  width: 402px;
+  height: 44px;
+  background-color: transparent;
+  border: 1px solid var(--grey-color);
+  border-radius: 3px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: var(--main-grey-text-color);
+  padding-left: 16px;
+}
+
+.inputField::placeholder {
+  color: var(--grey-color);
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardInfo .inputField {
+  width: 192px;
+}
+
+.inputCheckbox {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkBox {
+  width: 420px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  margin-top: 10px;
+}
+
+.checkBox input {
+  margin-right: 15px;
+  margin-top: 4px;
+  margin-left: 2px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--orange-color);
+  border: none;
+}
+
+.formButton {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.formButton input {
+  background-color: var(--orange-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  width: 390px;
+  height: 70px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.formButton input:active {
+  background-color: transparent;
+  border: 3px solid var(--orange-color);
+  color: var(--orange-color);
+}
+
+.error {
+  color: var(--red-color);
+
+  margin: 2px 0px;
+  font-size: 14px;
+}
+
+.cardNumber,
+.cardCVV,
+.cardExpires {
+  display: flex;
+  flex-direction: column;
+}
