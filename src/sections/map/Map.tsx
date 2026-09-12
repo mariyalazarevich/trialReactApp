@@ -1,5 +1,6 @@
 import { IShowInfoContext } from 'src/contexts/showInfoContext';
 import styles from './map.module.css';
+import { Placemark, Map as YandexMap } from '@pbe/react-yandex-maps';
 
 const LOCATION = [
   {
@@ -22,7 +23,11 @@ const LOCATION = [
 export const Map: React.FC<IShowInfoContext> = ({ showAllInfo }) => {
   return (
     <section className={styles.mapSection}>
-      <div className={styles.map}>
+      <YandexMap
+        defaultState={{ center: [55.75479265905677, 37.61102084118652], zoom: 13 }}
+        className={styles.map}
+      >
+        <Placemark defaultGeometry={[55.75479265905677, 37.61102084118652]} />
         <div className={styles.locationDescription}>
           {LOCATION.map((el, index) => (
             <div className={styles.descriptionElements} key={el.class + index}>
@@ -53,7 +58,7 @@ export const Map: React.FC<IShowInfoContext> = ({ showAllInfo }) => {
             </div>
           </div>
         </div>
-      </div>
+      </YandexMap>
     </section>
   );
 };

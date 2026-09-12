@@ -116,7 +116,7 @@ export const OrderForm = () => {
               {...register('cardExpires', {
                 required: 'Это поле обязательно',
                 validate: (value: string) => {
-                  const expiresRegEx = /^(\d{1,2})\/(\d{4})$/;
+                  const expiresRegEx = /^(0[1-9]|1[0-2])\/?([0-9]{2}|[0-9]{4})$/;
                   if (!expiresRegEx.test(value)) {
                     return 'Неверный формат данных';
                   }

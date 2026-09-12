@@ -5,18 +5,18 @@
 .map {
   height: 510px;
   width: 1920px;
-  background-image: url('/map.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 20px 0px;
+  position: relative;
 }
 
 .locationDescription {
   width: 420px;
   height: 470px;
   background-color: white;
-  margin-left: 390px;
-  padding-top: 15px;
+  margin-left: 200px;
+  position: absolute;
+  top: 20px;
+  left: 50px;
+  z-index: 10;
 }
 
 .descriptionElements {

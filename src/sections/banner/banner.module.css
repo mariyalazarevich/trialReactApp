@@ -25,9 +25,11 @@
   color: white;
   width: 887px;
   margin-left: 390px;
-  margin-top: 286px;
+  margin-top: 260px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 1;
+  text-align: start;
 }
 
 .mainPhoto h1 span {
@@ -91,7 +93,7 @@
   text-align: center;
   color: white;
   font-weight: 900;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 100%;
   margin-left: 390px;
   margin-top: 5px;
@@ -103,4 +105,11 @@
 .toBookButton:active {
   color: var(--orange-color);
   border-color: var(--orange-color);
+}
+
+.link {
+  margin-top: 20px;
+  padding: 0px;
+  width: 304px;
+  height: 68px;
 }

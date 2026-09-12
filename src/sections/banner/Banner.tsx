@@ -35,7 +35,7 @@ export const Banner = () => {
         <button className={styles.toBookButton} onClick={openModal}>
           Забронировать место
         </button>
-        <Link to="order">
+        <Link to="order" className={styles.link}>
           <button className={styles.toBookButton}>Перейти на бронирование</button>
         </Link>
         <OrderComponent isOpen={isModalOen} onClose={closeModal}></OrderComponent>
