@@ -1,5 +1,6 @@
 import styles from './orderForm.module.css';
 import { useForm } from 'react-hook-form';
+import { createOrder } from 'src/store/api/orderApiFunctions';
 
 const FORM_ELEMENTS = [
   {
@@ -57,6 +58,19 @@ const FORM_ELEMENTS = [
 
 const today = new Date(Date.now());
 
+const submitForm = async (data) => {
+  const { date, email, name, surname, tel } = data;
+  const order = {
+    date: new Date(date),
+    time: "string",
+    email,
+    name,
+    surname,
+    tel,
+  }
+  await createOrder(order);
+}
+
 export const OrderForm = () => {
   const {
     register,
@@ -65,7 +79,7 @@ export const OrderForm = () => {
   } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(console.log)} noValidate>
+    <form onSubmit={handleSubmit(submitForm)} noValidate>
       {FORM_ELEMENTS.map((element, index) => (
         <div className={styles.formElement} key={index + element.label}>
           <label className={styles.label} htmlFor={element.id}>
