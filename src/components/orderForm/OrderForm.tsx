@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './orderForm.module.css';
 import { useForm } from 'react-hook-form';
 import { createOrder } from 'src/store/api/orderApiFunctions';
@@ -58,25 +59,40 @@ const FORM_ELEMENTS = [
 
 const today = new Date(Date.now());
 
-const submitForm = async (data) => {
-  const { date, email, name, surname, tel } = data;
-  const order = {
-    date: new Date(date),
-    time: "string",
-    email,
-    name,
-    surname,
-    tel,
-  }
-  await createOrder(order);
-}
-
 export const OrderForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const submitForm = async data => {
+    const { date, email, name, surname, tel } = data;
+    const order = {
+      date: new Date(date),
+      time: 'string',
+      email,
+      name,
+      surname,
+      tel,
+    };
+    setIsLoading(true);
+    const response = await createOrder(order);
+    console.log(response);
+    if (response === 200) {
+      setTimeout(() => setIsLoading(false), 1000);
+      setTimeout(() => setIsSuccess(true), 1000);
+    }
+  };
+
+  if (isSuccess) {
+    setTimeout(() => console.log('ekwjnrjnw'), 1000);
+    return <div className={styles.successPage}>Спасибо за вашу заяку!</div>;
+    //тут надо как-то перенести назад на MainPage
+  }
 
   return (
     <form onSubmit={handleSubmit(submitForm)} noValidate>
@@ -188,6 +204,8 @@ export const OrderForm = () => {
       <div className={styles.formButton}>
         <input type="submit" value="Забронировать" />
       </div>
+
+      {isLoading && <div>Ваши данные отправляются на сервер</div>}
     </form>
   );
 };
