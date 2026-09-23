@@ -1,0 +1,39 @@
+h1 {
+  margin: 10px 0px;
+  text-align: center;
+  line-height: 151%;
+  font-size: 22px;
+  letter-spacing: 0%;
+}
+
+.authorizationButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.authorizationButton {
+  position: relative;
+}
+
+.authorizationButton::after {
+  position: absolute;
+  content: '';
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--main-grey-text-color);
+  transition: 0.5s;
+}
+
+.authorizationButton:hover::after {
+  width: 100%;
+  color: var(--main-grey-text-color);
+}
+
+.authorizationButton:hover {
+  cursor: pointer;
+}

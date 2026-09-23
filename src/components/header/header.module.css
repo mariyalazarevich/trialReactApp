@@ -11,6 +11,10 @@ header {
   margin-top: 40px;
 }
 
+.helyflyLogo:hover {
+  cursor: pointer;
+}
+
 .tel {
   color: var(--dark-grey-colo);
   margin-left: 36px;
@@ -24,4 +28,43 @@ header {
   margin-top: 41px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.authContainer {
+  margin-left: 1000px;
+  margin-top: 41px;
+  margin-bottom: 2px;
+  display: flex;
+  flex-direction: row;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.authButton {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.authContainer:hover {
+  cursor: pointer;
+}
+
+.authContainer::after {
+  position: absolute;
+  content: '';
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--main-grey-text-color);
+  transition: 0.5s;
+}
+
+.authContainer:hover::after {
+  width: 100%;
+  color: var(--main-grey-text-color);
 }

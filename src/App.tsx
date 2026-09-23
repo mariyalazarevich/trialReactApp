@@ -6,6 +6,8 @@ import { ShowInfoProvider } from './contexts/showInfoContext';
 import { Route, Routes, BrowserRouter } from 'react-router';
 import { Order } from './pages/OrderPage/Order';
 import { YMaps } from '@pbe/react-yandex-maps';
+import { Authorization } from './pages/AuthorizationPage/Authorization';
+import { Registration } from './pages/RegistrationPage/Registration';
 
 interface ErrorFallbackProps {
   error: Error;
@@ -39,6 +41,8 @@ function App() {
             <Routes>
               <Route path="*" element={<Main />}></Route>
               <Route path="order" element={<Order />}></Route>
+              <Route path="authorization" element={<Authorization />}></Route>
+              <Route path="registration" element={<Registration />}></Route>
             </Routes>
           </BrowserRouter>
         </ShowInfoProvider>
