@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './orderForm.module.css';
 import { useForm } from 'react-hook-form';
 import { createOrder } from 'src/store/api/orderApiFunctions';
+import { useNavigate } from 'react-router';
 
 const FORM_ELEMENTS = [
   {
@@ -10,6 +11,19 @@ const FORM_ELEMENTS = [
     id: 'date',
     type: 'text',
     rules: { required: 'Это поле обязательно' },
+  },
+  {
+    label: 'Время',
+    placeholder: '09:00',
+    id: 'time',
+    type: 'text',
+    rules: {
+      required: 'Это поле обязательно',
+      pattern: {
+        value: /^([01]\d|2[0-3])[:-]([0-5]\d)$/,
+        message: 'Неверный формат данных',
+      },
+    },
   },
   {
     label: 'Email',
@@ -60,6 +74,8 @@ const FORM_ELEMENTS = [
 const today = new Date(Date.now());
 
 export const OrderForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -67,13 +83,13 @@ export const OrderForm = () => {
   } = useForm();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
 
   const submitForm = async data => {
-    const { date, email, name, surname, tel } = data;
+    const { date, time, email, name, surname, tel } = data;
     const order = {
       date: new Date(date),
-      time: 'string',
+      time,
       email,
       name,
       surname,
@@ -81,17 +97,22 @@ export const OrderForm = () => {
     };
     setIsLoading(true);
     const response = await createOrder(order);
-    console.log(response);
-    if (response === 200) {
-      setTimeout(() => setIsLoading(false), 1000);
+    if (response.status === 200) {
       setTimeout(() => setIsSuccess(true), 1000);
+    } else {
+      console.log(response.status + ' ' + response.message);
+      setTimeout(() => setIsSuccess(false), 1000);
     }
   };
 
   if (isSuccess) {
-    setTimeout(() => console.log('ekwjnrjnw'), 1000);
+    setTimeout(() => navigate('/'), 1000);
     return <div className={styles.successPage}>Спасибо за вашу заяку!</div>;
-    //тут надо как-то перенести назад на MainPage
+  }
+
+  if (isSuccess === false) {
+    setTimeout(() => navigate('/'), 2000);
+    return <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>;
   }
 
   return (
