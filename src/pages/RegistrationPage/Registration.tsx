@@ -6,9 +6,19 @@ import { useNavigate } from 'react-router';
 
 const REGISTRATION_FORM_ELEMENTS = [
   {
-    label: 'Логин',
-    placeholder: 'Логин',
-    id: 'login',
+    label: 'Имя',
+    placeholder: 'Иван',
+    id: 'name',
+    type: 'text',
+    rules: {
+      required: 'Это поле обязательно',
+      pattern: { value: /^[A-Za-zА-Яа-я]+$/, message: 'Неверный формат данных' },
+    },
+  },
+  {
+    label: 'Фамилия',
+    placeholder: 'Иванов',
+    id: 'surname',
     type: 'text',
     rules: {
       required: 'Это поле обязательно',
@@ -30,19 +40,9 @@ const REGISTRATION_FORM_ELEMENTS = [
     },
   },
   {
-    label: 'Имя',
-    placeholder: 'Иван',
-    id: 'name',
-    type: 'text',
-    rules: {
-      required: 'Это поле обязательно',
-      pattern: { value: /^[A-Za-zА-Яа-я]+$/, message: 'Неверный формат данных' },
-    },
-  },
-  {
-    label: 'Фамилия',
-    placeholder: 'Иванов',
-    id: 'surname',
+    label: 'Логин',
+    placeholder: 'Логин',
+    id: 'login',
     type: 'text',
     rules: {
       required: 'Это поле обязательно',
@@ -60,7 +60,7 @@ const REGISTRATION_FORM_ELEMENTS = [
     },
   },
   {
-    label: 'ПовторныйПароль',
+    label: 'Подтвердите пароль',
     placeholder: 'Подтвердите пароль',
     id: 'repeatPassword',
     type: 'text',
