@@ -30,8 +30,11 @@ const AUTHORIZATION_FORM_ELEMENTS = [
 export const Authorization = () => {
   const navigate = useNavigate();
 
-  const authorization = () => {
+  const authorization = data => {
+    const { login, password } = data;
+    const user = { login, password };
     console.log('auth');
+    setTimeout(() => navigate('/'), 1000);
   };
 
   return (

@@ -1,5 +1,6 @@
 import { RegisterOptions, useForm } from 'react-hook-form';
 import styles from './authorizationForm.module.css';
+import { useState } from 'react';
 
 type FormElement = {
   label: string;
@@ -12,7 +13,7 @@ type FormElement = {
 type AuthorizationFormProps = {
   formElements: FormElement[];
   submitButtonLabel: string;
-  submitButton: () => void;
+  submitButton: (data) => void;
 };
 
 export const AuthorizationForm = ({
@@ -26,8 +27,20 @@ export const AuthorizationForm = ({
     formState: { errors },
   } = useForm();
 
+  const [isPasswordsEqual, setIsPasswordEqual] = useState<boolean | undefined>();
+
+  const submitForm = data => {
+    const { password, repeatPassword } = data;
+    if (password && password !== repeatPassword) {
+      setIsPasswordEqual(false);
+      return;
+    }
+    setIsPasswordEqual(true);
+    submitButton(data);
+  };
+
   return (
-    <form onSubmit={handleSubmit(submitButton)} noValidate>
+    <form onSubmit={handleSubmit(submitForm)} noValidate>
       {formElements.map((element, index) => (
         <div className={styles.formElement} key={index + element.label}>
           <label className={styles.label} htmlFor={element.id}>
@@ -44,6 +57,8 @@ export const AuthorizationForm = ({
           {errors[element.id] && (
             <p className={styles.error}>{errors[element.id]?.message?.toString()}</p>
           )}
+          {(element.id === 'password' || element.id === 'repeatPassword') &&
+            isPasswordsEqual === false && <p className={styles.error}>Пароли должны совпадать</p>}
         </div>
       ))}
 

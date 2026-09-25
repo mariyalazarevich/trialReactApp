@@ -3,6 +3,8 @@ import { Header } from '@components/header/Header';
 import styles from './registration.module.css';
 import { AuthorizationForm } from '@components/authorizationForm/AuthorizationForm';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import { createUser } from 'src/store/api/userApiFunctions';
 
 const REGISTRATION_FORM_ELEMENTS = [
   {
@@ -73,15 +75,50 @@ const REGISTRATION_FORM_ELEMENTS = [
 
 export const Registration = () => {
   const navigate = useNavigate();
-
-  const registration = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
+  const registration = async data => {
+    const { name, surname, email, login, password } = data;
+    const user = { name, surname, email, login, password };
     console.log('registration');
+    setIsLoading(true);
+    const response = await createUser(user);
+    if (response.status === 200) {
+      setTimeout(() => setIsSuccess(true), 1000);
+    } else {
+      console.log(response.status + ' ' + response.message);
+      setTimeout(() => setIsSuccess(false), 1000);
+    }
   };
+
+  if (isSuccess) {
+    setTimeout(() => navigate('/'), 1000);
+    return (
+      <>
+        <Header></Header>
+        <h1>Регистрация</h1>
+        <div className={styles.successPage}>Регистрация прошла успешно!</div>
+        <Footer></Footer>
+      </>
+    );
+  }
+
+  if (isSuccess === false) {
+    setTimeout(() => navigate('/'), 2000);
+    return (
+      <>
+        <Header></Header>
+        <h1>Регистрация</h1>
+        <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
+        <Footer></Footer>
+      </>
+    );
+  }
 
   return (
     <>
       <Header></Header>
-      <h1>Авторизация</h1>
+      <h1>Регистрация</h1>
       <AuthorizationForm
         formElements={REGISTRATION_FORM_ELEMENTS}
         submitButtonLabel="Зарегистрироваться"
@@ -93,6 +130,9 @@ export const Registration = () => {
       >
         <p className={styles.authorizationButton}>Уже есть аккаунт?</p>
       </div>
+      {isLoading && (
+        <p style={{ textAlign: 'center', margin: '10px 0px' }}>Данные отправляются на сервер...</p>
+      )}
       <Footer></Footer>
     </>
   );
