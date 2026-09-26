@@ -31,7 +31,7 @@ export const AuthorizationForm = ({
 
   const submitForm = data => {
     const { password, repeatPassword } = data;
-    if (password && password !== repeatPassword) {
+    if (password && repeatPassword && password !== repeatPassword) {
       setIsPasswordEqual(false);
       return;
     }

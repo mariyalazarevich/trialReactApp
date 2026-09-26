@@ -71,3 +71,15 @@ export const deleteOrderByID = async (id: string) => {
     return { status: 400, message: error };
   }
 };
+
+export const logIn = async (user: { login: string; password: string }) => {
+  try {
+    const response = await axios.post(`http://localhost:8000/api/users/login`, user);
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return { status: error.response?.status, message: error.response?.data?.message };
+    }
+    return { status: 400, message: error };
+  }
+};
