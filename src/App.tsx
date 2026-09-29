@@ -8,6 +8,8 @@ import { Order } from './pages/OrderPage/Order';
 import { YMaps } from '@pbe/react-yandex-maps';
 import { Authorization } from './pages/AuthorizationPage/Authorization';
 import { Registration } from './pages/RegistrationPage/Registration';
+import { UserContext, UserProvider } from './contexts/userContext';
+import { Basket } from './pages/BasketPage/Basket';
 
 interface ErrorFallbackProps {
   error: Error;
@@ -37,14 +39,29 @@ function App() {
     >
       <YMaps query={{ apikey: '2b512826-bd93-4fe9-a6a9-da327ae92bf4' }}>
         <ShowInfoProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="*" element={<Main />}></Route>
-              <Route path="order" element={<Order />}></Route>
-              <Route path="authorization" element={<Authorization />}></Route>
-              <Route path="registration" element={<Registration />}></Route>
-            </Routes>
-          </BrowserRouter>
+          <UserProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="order" element={<Order />}></Route>
+                <Route path="registration" element={<Registration />}></Route>
+                <Route path="*" element={<Main />}></Route>
+                <Route
+                  path="authorization"
+                  element={
+                    <UserContext.Consumer>
+                      {value => <Authorization {...value} />}
+                    </UserContext.Consumer>
+                  }
+                ></Route>
+                <Route
+                  path="basket"
+                  element={
+                    <UserContext.Consumer>{value => <Basket {...value} />}</UserContext.Consumer>
+                  }
+                ></Route>
+              </Routes>
+            </BrowserRouter>
+          </UserProvider>
         </ShowInfoProvider>
       </YMaps>
     </ErrorBoundary>

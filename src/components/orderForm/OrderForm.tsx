@@ -3,6 +3,9 @@ import styles from './orderForm.module.css';
 import { useForm } from 'react-hook-form';
 import { createOrder } from 'src/store/api/orderApiFunctions';
 import { useNavigate } from 'react-router';
+import flatpickr from 'flatpickr';
+import { Russian } from 'flatpickr/dist/l10n/ru.js';
+import { IUserContext } from 'src/contexts/userContext';
 
 const FORM_ELEMENTS = [
   {
@@ -73,7 +76,7 @@ const FORM_ELEMENTS = [
 
 const today = new Date(Date.now());
 
-export const OrderForm = () => {
+export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
   const navigate = useNavigate();
 
   const {
@@ -82,13 +85,26 @@ export const OrderForm = () => {
     formState: { errors },
   } = useForm();
 
+  flatpickr('#date', {
+    locale: Russian,
+    dateFormat: 'd.m.Y',
+    minDate: 'today',
+    disableMobile: true,
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
 
   const submitForm = async data => {
+    if (!isAuthorizedUser) {
+      setTimeout(() => navigate('/'), 2000);
+      return (
+        <div className={styles.successPage}>Для оформления заказа необходимо авторизоваться!</div>
+      );
+    }
     const { date, time, email, name, surname, tel } = data;
     const order = {
-      date: new Date(date),
+      date: date.toString(),
       time,
       email,
       name,
@@ -123,13 +139,25 @@ export const OrderForm = () => {
             {element.label}
             <span>*</span>
           </label>
-          <input
-            {...register(element.id, element.rules)}
-            type={element.type}
-            className={styles.inputField}
-            placeholder={element.placeholder}
-            id={element.id}
-          />
+          {element.id === 'date' ? (
+            <input
+              {...register('date', {
+                required: 'Это поле обязательно',
+              })}
+              type={element.type}
+              className={styles.inputField}
+              placeholder={element.placeholder}
+              id={element.id}
+            />
+          ) : (
+            <input
+              {...register(element.id, element.rules)}
+              type={element.type}
+              className={styles.inputField}
+              placeholder={element.placeholder}
+              id={element.id}
+            />
+          )}
           {errors[element.id] && (
             <p className={styles.error}>{errors[element.id]?.message?.toString()}</p>
           )}

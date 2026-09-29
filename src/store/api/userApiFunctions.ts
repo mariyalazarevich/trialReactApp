@@ -8,7 +8,9 @@ export const createUser = async (user: {
   password: string;
 }) => {
   try {
-    const response = await axios.post('http://localhost:8000/api/users/user', user);
+    const response = await axios.post('http://localhost:8000/api/users/user', user, {
+      withCredentials: true,
+    });
     return { status: response.status, message: 'OK' };
   } catch (error) {
     return { status: 400, message: error };
@@ -17,7 +19,9 @@ export const createUser = async (user: {
 
 export const getAllUsers = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/users/users');
+    const response = await axios.get('http://localhost:8000/api/users/users', {
+      withCredentials: true,
+    });
     return { status: response.status, data: response.data };
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -29,7 +33,9 @@ export const getAllUsers = async () => {
 
 export const getUserByID = async (id: string) => {
   try {
-    const response = await axios.get(`http://localhost:8000/api/users/users/${id}`);
+    const response = await axios.get(`http://localhost:8000/api/users/users/${id}`, {
+      withCredentials: true,
+    });
     return { status: response.status, data: response.data };
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -50,7 +56,9 @@ export const updateUserByID = async (
   }
 ) => {
   try {
-    const response = await axios.patch(`http://localhost:8000/api/users/update/user/${id}`, user);
+    const response = await axios.patch(`http://localhost:8000/api/users/update/user/${id}`, user, {
+      withCredentials: true,
+    });
     return { status: response.status, data: response.data };
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -62,7 +70,9 @@ export const updateUserByID = async (
 
 export const deleteOrderByID = async (id: string) => {
   try {
-    const response = await axios.delete(`http://localhost:8000/api/users/delete/user/${id}`);
+    const response = await axios.delete(`http://localhost:8000/api/users/delete/user/${id}`, {
+      withCredentials: true,
+    });
     return { status: response.status, data: response.data };
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -74,7 +84,23 @@ export const deleteOrderByID = async (id: string) => {
 
 export const logIn = async (user: { login: string; password: string }) => {
   try {
-    const response = await axios.post(`http://localhost:8000/api/users/login`, user);
+    const response = await axios.post(`http://localhost:8000/api/users/login`, user, {
+      withCredentials: true,
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return { status: error.response?.status, message: error.response?.data?.message };
+    }
+    return { status: 400, message: error };
+  }
+};
+
+export const logOut = async () => {
+  try {
+    const response = await axios.delete(`http://localhost:8000/api/users/logout`, {
+      withCredentials: true,
+    });
     return { status: response.status, data: response.data };
   } catch (error) {
     if (axios.isAxiosError(error)) {

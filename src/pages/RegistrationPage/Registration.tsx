@@ -5,6 +5,7 @@ import { AuthorizationForm } from '@components/authorizationForm/AuthorizationFo
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { createUser } from 'src/store/api/userApiFunctions';
+import { UserContext } from 'src/contexts/userContext';
 
 const REGISTRATION_FORM_ELEMENTS = [
   {
@@ -95,7 +96,7 @@ export const Registration = () => {
     setTimeout(() => navigate('/'), 1000);
     return (
       <>
-        <Header></Header>
+        <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
         <h1>Регистрация</h1>
         <div className={styles.successPage}>Регистрация прошла успешно!</div>
         <Footer></Footer>
@@ -107,7 +108,7 @@ export const Registration = () => {
     setTimeout(() => navigate('/'), 2000);
     return (
       <>
-        <Header></Header>
+        <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
         <h1>Регистрация</h1>
         <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
         <Footer></Footer>
@@ -117,7 +118,7 @@ export const Registration = () => {
 
   return (
     <>
-      <Header></Header>
+      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
       <h1>Регистрация</h1>
       <AuthorizationForm
         formElements={REGISTRATION_FORM_ELEMENTS}

@@ -5,6 +5,7 @@ import { AuthorizationForm } from '@components/authorizationForm/AuthorizationFo
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { logIn } from 'src/store/api/userApiFunctions';
+import { IUserContext, UserContext } from 'src/contexts/userContext';
 
 const AUTHORIZATION_FORM_ELEMENTS = [
   {
@@ -29,7 +30,7 @@ const AUTHORIZATION_FORM_ELEMENTS = [
   },
 ];
 
-export const Authorization = () => {
+export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +44,9 @@ export const Authorization = () => {
     setIsLoading(true);
     const response = await logIn(user);
     if (response.status === 200) {
-      setToken(response.data);
+      const authorizedUser = response.data;
+      setToken(authorizedUser.token);
+      setUser(authorizedUser.login, authorizedUser.token, authorizedUser._id);
       console.log(response.data);
       setTimeout(() => setIsSuccess(true), 1000);
     } else {
@@ -57,7 +60,7 @@ export const Authorization = () => {
     setTimeout(() => navigate('/'), 1000);
     return (
       <>
-        <Header></Header>
+        <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
         <h1>Авторизация</h1>
         <div className={styles.successPage}>Авторизация прошла успешно!</div>
         <Footer></Footer>
@@ -69,7 +72,7 @@ export const Authorization = () => {
     setTimeout(() => navigate('/'), 2000);
     return (
       <>
-        <Header></Header>
+        <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
         <h1>Авторизация</h1>
         <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
         <Footer></Footer>
@@ -79,7 +82,7 @@ export const Authorization = () => {
 
   return (
     <>
-      <Header></Header>
+      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
       <h1>Авторизация</h1>
       <AuthorizationForm
         formElements={AUTHORIZATION_FORM_ELEMENTS}

@@ -1,8 +1,9 @@
 import { UserComponent } from '@components/userComponent/UserComponent';
 import styles from './header.module.css';
 import { useNavigate } from 'react-router';
+import { IUserContext } from 'src/contexts/userContext';
 
-export const Header = () => {
+export const Header: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
   const navigate = useNavigate();
 
   return (
@@ -12,10 +13,17 @@ export const Header = () => {
       </div>
       <p className={styles.tel}>Телефон:</p>
       <p className={styles.telNumber}>8(800)-123-12-12</p>
-      <div className={styles.authContainer} onClick={() => navigate('/authorization')}>
-        <UserComponent />
-        <p className={styles.authButton}>Войти</p>
-      </div>
+      {!isAuthorizedUser ? (
+        <div className={styles.authContainer} onClick={() => navigate('/authorization')}>
+          <UserComponent />
+          <p className={styles.authButton}>Войти</p>
+        </div>
+      ) : (
+        <div className={styles.authContainer} onClick={() => navigate('/basket')}>
+          <UserComponent />
+          <p className={styles.authButton}>Корзина</p>
+        </div>
+      )}
     </header>
   );
 };
