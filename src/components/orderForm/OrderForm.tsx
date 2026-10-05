@@ -1,13 +1,23 @@
 import { useState } from 'react';
 import styles from './orderForm.module.css';
-import { useForm } from 'react-hook-form';
+import { Controller, RegisterOptions, useForm } from 'react-hook-form';
 import { createOrder } from 'src/store/api/orderApiFunctions';
 import { useNavigate } from 'react-router';
-import flatpickr from 'flatpickr';
-import { Russian } from 'flatpickr/dist/l10n/ru.js';
 import { IUserContext } from 'src/contexts/userContext';
+import 'flatpickr/dist/themes/material_green.css';
+import Flatpickr from 'react-flatpickr';
+import { Russian } from 'flatpickr/dist/l10n/ru';
+import { IOrderForm } from 'src/interfaces/orderFormInterface';
 
-const FORM_ELEMENTS = [
+type FormElement = {
+  label: string;
+  placeholder: string;
+  id: keyof IOrderForm;
+  type: string;
+  rules?: RegisterOptions<IOrderForm>;
+};
+
+const FORM_ELEMENTS: FormElement[] = [
   {
     label: 'Дата',
     placeholder: '01.01.2026',
@@ -42,36 +52,7 @@ const FORM_ELEMENTS = [
       },
     },
   },
-  {
-    label: 'Имя',
-    placeholder: 'Иван',
-    id: 'name',
-    type: 'text',
-    rules: {
-      required: 'Это поле обязательно',
-      pattern: { value: /^[A-Za-zА-Яа-я]+$/, message: 'Неверный формат данных' },
-    },
-  },
-  {
-    label: 'Фамилия',
-    placeholder: 'Иванов',
-    id: 'surname',
-    type: 'text',
-    rules: {
-      required: 'Это поле обязательно',
-      pattern: { value: /^[A-Za-zА-Яа-я]+$/, message: 'Неверный формат данных' },
-    },
-  },
-  {
-    label: 'Телефон',
-    placeholder: '8(029) 123-45-67',
-    id: 'tel',
-    type: 'tel',
-    rules: {
-      required: 'Это поле обязательно',
-      pattern: { value: /^(\+375)(29|33|44|25)[0-9]{7}$/, message: 'Неверный формат данных' },
-    },
-  },
+  // ...
 ];
 
 const today = new Date(Date.now());
@@ -81,21 +62,15 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-
-  flatpickr('#date', {
-    locale: Russian,
-    dateFormat: 'd.m.Y',
-    minDate: 'today',
-    disableMobile: true,
-  });
+  } = useForm<IOrderForm>();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
 
-  const submitForm = async data => {
+  const submitForm = async (data: IOrderForm) => {
     if (!isAuthorizedUser) {
       setTimeout(() => navigate('/'), 2000);
       return (
@@ -103,9 +78,10 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
       );
     }
     const { date, time, email, name, surname, tel } = data;
+    const [day, month, year] = date.split('.');
+    const dateTime = `${year}-${month}-${day}T${time}:00`;
     const order = {
-      date: date.toString(),
-      time,
+      dateTime,
       email,
       name,
       surname,
@@ -139,15 +115,27 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
             {element.label}
             <span>*</span>
           </label>
+
           {element.id === 'date' ? (
-            <input
-              {...register('date', {
+            <Controller
+              name="date"
+              control={control}
+              rules={{
                 required: 'Это поле обязательно',
-              })}
-              type={element.type}
-              className={styles.inputField}
-              placeholder={element.placeholder}
-              id={element.id}
+              }}
+              render={({ field }) => (
+                <Flatpickr
+                  value={field.value}
+                  onChange={(_, dateStr) => field.onChange(dateStr)}
+                  options={{
+                    dateFormat: 'd.m.Y',
+                    minDate: 'today',
+                    locale: Russian,
+                  }}
+                  className={styles.inputField}
+                  placeholder="02.10.2026"
+                />
+              )}
             />
           ) : (
             <input
@@ -158,6 +146,7 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
               id={element.id}
             />
           )}
+
           {errors[element.id] && (
             <p className={styles.error}>{errors[element.id]?.message?.toString()}</p>
           )}
@@ -224,7 +213,7 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
                 pattern: { value: /^[0-9]{3}$/, message: 'Неверный формат данных' },
               })}
               id="cardCVV"
-              type="text"
+              type="number"
               className={styles.inputField}
               placeholder="CVV"
             />

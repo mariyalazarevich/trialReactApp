@@ -6,8 +6,18 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { logIn } from 'src/store/api/userApiFunctions';
 import { IUserContext, UserContext } from 'src/contexts/userContext';
+import { RegisterOptions } from 'react-hook-form';
+import { IAuthForm } from 'src/interfaces/authFromInterface';
 
-const AUTHORIZATION_FORM_ELEMENTS = [
+type FormElement = {
+  label: string;
+  placeholder: string;
+  id: keyof IAuthForm;
+  type: string;
+  rules?: RegisterOptions<IAuthForm>;
+};
+
+const AUTHORIZATION_FORM_ELEMENTS: FormElement[] = [
   {
     label: 'Логин',
     placeholder: 'Логин',
@@ -34,10 +44,11 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [token, setToken] = useState<string>();
 
-  const authorization = async data => {
+  const authorization = async (data: IAuthForm) => {
     const { login, password } = data;
     const user = { login, password };
     console.log('auth');
@@ -51,7 +62,8 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
       setTimeout(() => setIsSuccess(true), 1000);
     } else {
       console.log(response.status + ' ' + response.message);
-      setTimeout(() => setIsSuccess(false), 1000);
+      setIsSuccess(false);
+      setTimeout(() => setIsError(true), 1000);
     }
   };
 
@@ -68,7 +80,7 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
     );
   }
 
-  if (isSuccess === false) {
+  if (isError) {
     setTimeout(() => navigate('/'), 2000);
     return (
       <>

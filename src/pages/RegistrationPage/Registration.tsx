@@ -6,8 +6,18 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { createUser } from 'src/store/api/userApiFunctions';
 import { UserContext } from 'src/contexts/userContext';
+import { IAuthForm } from 'src/interfaces/authFromInterface';
+import { RegisterOptions } from 'react-hook-form';
 
-const REGISTRATION_FORM_ELEMENTS = [
+type FormElement = {
+  label: string;
+  placeholder: string;
+  id: keyof IAuthForm;
+  type: string;
+  rules?: RegisterOptions<IAuthForm>;
+};
+
+const REGISTRATION_FORM_ELEMENTS: FormElement[] = [
   {
     label: 'Имя',
     placeholder: 'Иван',
@@ -77,18 +87,28 @@ const REGISTRATION_FORM_ELEMENTS = [
 export const Registration = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
-  const registration = async data => {
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const registration = async (data: IAuthForm) => {
     const { name, surname, email, login, password } = data;
-    const user = { name, surname, email, login, password };
-    console.log('registration');
+    if (!name || !surname || !email) {
+      return;
+    }
+    const user = {
+      name,
+      surname,
+      email,
+      login,
+      password,
+    };
     setIsLoading(true);
     const response = await createUser(user);
     if (response.status === 200) {
       setTimeout(() => setIsSuccess(true), 1000);
     } else {
       console.log(response.status + ' ' + response.message);
-      setTimeout(() => setIsSuccess(false), 1000);
+      setIsSuccess(false);
+      setTimeout(() => setIsError(true), 1000);
     }
   };
 
@@ -104,7 +124,7 @@ export const Registration = () => {
     );
   }
 
-  if (isSuccess === false) {
+  if (isError) {
     setTimeout(() => navigate('/'), 2000);
     return (
       <>

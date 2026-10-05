@@ -1,7 +1,6 @@
 export interface IOrder {
   _id: string;
-  date: string;
-  time: string;
+  dateTime: string;
   email: string;
   name: string;
   surname: string;

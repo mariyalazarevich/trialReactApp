@@ -1,19 +1,20 @@
 import { RegisterOptions, useForm } from 'react-hook-form';
 import styles from './authorizationForm.module.css';
 import { useState } from 'react';
+import { IAuthForm } from 'src/interfaces/authFromInterface';
 
 type FormElement = {
   label: string;
   placeholder: string;
-  id: string;
+  id: keyof IAuthForm;
   type: string;
-  rules?: RegisterOptions;
+  rules?: RegisterOptions<IAuthForm>;
 };
 
 type AuthorizationFormProps = {
   formElements: FormElement[];
   submitButtonLabel: string;
-  submitButton: (data) => void;
+  submitButton: (data: IAuthForm) => void;
 };
 
 export const AuthorizationForm = ({
@@ -25,11 +26,11 @@ export const AuthorizationForm = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<IAuthForm>(); //добавить тип данных для data
 
   const [isPasswordsEqual, setIsPasswordEqual] = useState<boolean | undefined>();
 
-  const submitForm = data => {
+  const submitForm = (data: IAuthForm) => {
     const { password, repeatPassword } = data;
     if (password && repeatPassword && password !== repeatPassword) {
       setIsPasswordEqual(false);

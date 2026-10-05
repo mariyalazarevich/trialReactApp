@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 export const createOrder = async (order: {
-  date: Date;
-  time: string;
+  dateTime: string;
   email: string;
   name: string;
   surname: string;
