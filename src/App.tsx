@@ -10,6 +10,11 @@ import { Authorization } from './pages/AuthorizationPage/Authorization';
 import { Registration } from './pages/RegistrationPage/Registration';
 import { UserContext, UserProvider } from './contexts/userContext';
 import { Basket } from './pages/BasketPage/Basket';
+import { Administration } from './pages/AdminPage/AdminPage';
+import { Analytics } from './admin/analityc/Analytics';
+import { Clients } from './admin/clients/Clients';
+import { CurrentTasks } from './admin/currentTasks/CurrentTasks';
+import { Orders } from './admin/orders/Orders';
 
 interface ErrorFallbackProps {
   error: Error;
@@ -59,6 +64,10 @@ function App() {
                     <UserContext.Consumer>{value => <Basket {...value} />}</UserContext.Consumer>
                   }
                 ></Route>
+                <Route path="admin/tasks" element={<CurrentTasks />}></Route>
+                <Route path="admin/orders" element={<Orders />}></Route>
+                <Route path="admin/clients" element={<Clients />}></Route>
+                <Route path="admin/analytics" element={<Analytics />}></Route>
               </Routes>
             </BrowserRouter>
           </UserProvider>

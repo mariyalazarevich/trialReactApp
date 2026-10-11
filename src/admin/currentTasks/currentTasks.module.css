@@ -1,0 +1,181 @@
+.categoryButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  margin: 35px 0px;
+}
+
+.toBookButton {
+  width: 250px;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid var(--orange-color);
+  border-radius: 3px;
+  text-align: center;
+  color: var(--orange-color);
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 100%;
+  cursor: pointer;
+}
+
+.toBookButton:hover:not(:disabled) {
+  color: var(--orange-color);
+  border-color: var(--orange-color);
+}
+
+.toBookButton:active:not(:disabled) {
+  background-color: var(--orange-color);
+  color: white;
+  border-color: var(--orange-color);
+}
+
+.toBookButton:disabled {
+  cursor: default;
+}
+
+.currentBookButton {
+  background-color: var(--orange-color);
+  border-color: var(--orange-color);
+  color: white;
+}
+
+.mainInfoTable {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 45px 0px;
+}
+
+.infoCard {
+  min-height: 100px;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 22px 24px;
+  background-color: transparent;
+  border: 1px solid var(--grey-color);
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.title {
+  margin: 0;
+  color: var(--main-grey-text-color);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+}
+
+.value {
+  margin: 15px 0 0;
+  color: var(--main-grey-text-color);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+}
+
+.ordersTable {
+  width: 100%;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableTitle {
+  margin: 0 0 18px;
+  color: var(--main-grey-text-color);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 100%;
+  text-align: left;
+}
+
+.table {
+  width: 95%;
+  color: var(--main-grey-text-color);
+  border: 1px solid var(--grey-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr 1.5fr;
+  min-height: 58px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-bottom: 2px solid var(--orange-color);
+  align-items: center;
+}
+
+.tableHeader div {
+  padding: 0 18px;
+  color: var(--main-grey-text-color);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 100%;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr 1.5fr;
+  min-height: 62px;
+  align-items: center;
+  border-bottom: 1px solid var(--grey-color);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background-color: rgba(255, 255, 255, 0.035);
+}
+
+.tableRow div {
+  padding: 10px 18px;
+  color: var(--main-grey-text-color);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 100%;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 115px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.accepted {
+  color: var(--green-color);
+  border: 1px solid var(--green-color);
+  background-color: rgba(50, 205, 50, 0.1);
+}
+
+.waiting {
+  color: var(--orange-color);
+  border: 1px solid var(--orange-color);
+  background-color: rgba(252, 155, 9, 0.1);
+}
+
+.cancelled {
+  color: var(--red-color);
+  border: 1px solid var(--red-color);
+  background-color: rgba(255, 0, 0, 0.1);
+}

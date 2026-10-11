@@ -4,8 +4,8 @@ import { Controller, RegisterOptions, useForm } from 'react-hook-form';
 import { createOrder } from 'src/store/api/orderApiFunctions';
 import { useNavigate } from 'react-router';
 import { IUserContext } from 'src/contexts/userContext';
-import 'flatpickr/dist/themes/material_green.css';
 import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/themes/confetti.css';
 import { Russian } from 'flatpickr/dist/l10n/ru';
 import { IOrderForm } from 'src/interfaces/orderFormInterface';
 
@@ -52,7 +52,36 @@ const FORM_ELEMENTS: FormElement[] = [
       },
     },
   },
-  // ...
+  {
+    label: 'Имя',
+    placeholder: 'Иван',
+    id: 'name',
+    type: 'text',
+    rules: {
+      required: 'Это поле обязательно',
+      pattern: { value: /^[A-Za-zА-Яа-я]+$/, message: 'Неверный формат данных' },
+    },
+  },
+  {
+    label: 'Фамилия',
+    placeholder: 'Иванов',
+    id: 'surname',
+    type: 'text',
+    rules: {
+      required: 'Это поле обязательно',
+      pattern: { value: /^[A-Za-zА-Яа-я]+$/, message: 'Неверный формат данных' },
+    },
+  },
+  {
+    label: 'Телефон',
+    placeholder: '8(029) 123-45-67',
+    id: 'tel',
+    type: 'tel',
+    rules: {
+      required: 'Это поле обязательно',
+      pattern: { value: /^(\+375)(29|33|44|25)[0-9]{7}$/, message: 'Неверный формат данных' },
+    },
+  },
 ];
 
 const today = new Date(Date.now());
@@ -126,7 +155,7 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
               render={({ field }) => (
                 <Flatpickr
                   value={field.value}
-                  onChange={(_, dateStr) => field.onChange(dateStr)}
+                  onChange={dateStr => field.onChange(dateStr)}
                   options={{
                     dateFormat: 'd.m.Y',
                     minDate: 'today',

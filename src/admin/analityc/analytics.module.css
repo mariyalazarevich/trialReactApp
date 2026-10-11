@@ -1,0 +1,71 @@
+.categoryButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  margin: 35px 0px;
+}
+
+.toBookButton {
+  width: 250px;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid var(--orange-color);
+  border-radius: 3px;
+  text-align: center;
+  color: var(--orange-color);
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 100%;
+  cursor: pointer;
+}
+
+.toBookButton:hover:not(:disabled) {
+  color: var(--orange-color);
+  border-color: var(--orange-color);
+}
+
+.toBookButton:active:not(:disabled) {
+  background-color: var(--orange-color);
+  color: white;
+  border-color: var(--orange-color);
+}
+
+.toBookButton:disabled {
+  cursor: default;
+}
+
+.currentBookButton {
+  background-color: var(--orange-color);
+  border-color: var(--orange-color);
+  color: white;
+}
+
+.charts {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 25px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 35px auto 50px;
+  padding: 0 25px;
+  box-sizing: border-box;
+}
+
+.bestTimeBarChart,
+.monthProfitLineChart,
+.statusOrdersPieChart {
+  width: 600px;
+  height: 350px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid var(--grey-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(199, 199, 199, 0.8);
+}

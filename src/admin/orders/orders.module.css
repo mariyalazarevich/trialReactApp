@@ -1,0 +1,247 @@
+.categoryButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  margin: 35px 0px;
+}
+
+.toBookButton {
+  width: 250px;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid var(--orange-color);
+  border-radius: 3px;
+  text-align: center;
+  color: var(--orange-color);
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 100%;
+  cursor: pointer;
+}
+
+.toBookButton:hover:not(:disabled) {
+  color: var(--orange-color);
+  border-color: var(--orange-color);
+}
+
+.toBookButton:active:not(:disabled) {
+  background-color: var(--orange-color);
+  color: white;
+  border-color: var(--orange-color);
+}
+
+.toBookButton:disabled {
+  cursor: default;
+}
+
+.currentBookButton {
+  background-color: var(--orange-color);
+  border-color: var(--orange-color);
+  color: white;
+}
+
+.ordersTable {
+  width: 100%;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableTitle {
+  margin: 0 0 18px;
+  color: var(--main-grey-text-color);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 100%;
+  text-align: left;
+}
+
+.table {
+  width: 95%;
+  color: var(--main-grey-text-color);
+  border: 1px solid var(--grey-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr 1.5fr 1fr;
+  min-height: 58px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-bottom: 2px solid var(--orange-color);
+  align-items: center;
+}
+
+.tableHeader div {
+  padding: 0 18px;
+  color: var(--main-grey-text-color);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 100%;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr 1.5fr 1fr;
+  min-height: 62px;
+  align-items: center;
+  border-bottom: 1px solid var(--grey-color);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background-color: rgba(255, 255, 255, 0.035);
+}
+
+.tableRow div {
+  padding: 10px 18px;
+  color: var(--main-grey-text-color);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 100%;
+}
+
+.message {
+  color: var(--grey-color);
+  text-align: center;
+  margin: 40px 0px;
+  font-size: 20px;
+  border: none;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 115px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.accepted {
+  color: var(--green-color);
+  border: 1px solid var(--green-color);
+  background-color: rgba(50, 205, 50, 0.1);
+}
+
+.waiting {
+  color: var(--orange-color);
+  border: 1px solid var(--orange-color);
+  background-color: rgba(252, 155, 9, 0.1);
+}
+
+.cancelled {
+  color: var(--red-color);
+  border: 1px solid var(--red-color);
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.filters {
+  width: 95%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 18px;
+  padding: 18px;
+  box-sizing: border-box;
+  border: 1px solid var(--grey-color);
+  border-radius: 3px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+}
+
+.filterGroup label {
+  color: var(--main-grey-text-color);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.filterGroup input,
+.filterGroup select {
+  height: 42px;
+  min-width: 190px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: 1px solid var(--grey-color);
+  border-radius: 3px;
+  color: var(--main-grey-text-color);
+  font-size: 16px;
+  outline: none;
+}
+
+.filterGroup input:focus,
+.filterGroup select:focus {
+  border-color: var(--orange-color);
+}
+
+.filterGroup select {
+  cursor: pointer;
+}
+
+.filterGroup option {
+  background-color: #222;
+  color: var(--main-grey-text-color);
+}
+
+.resetButton {
+  height: 42px;
+
+  padding: 0 20px;
+
+  background-color: transparent;
+  border: 1px solid var(--orange-color);
+  border-radius: 3px;
+
+  color: var(--orange-color);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  background-color: var(--orange-color);
+  color: white;
+}
+
+.emptyRow {
+  min-height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--main-grey-text-color);
+  font-size: 15px;
+}
+
+select {
+  width: 250px;
+}
+
+label {
+  margin-right: 20px;
+}

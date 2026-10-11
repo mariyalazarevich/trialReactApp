@@ -121,3 +121,11 @@ form {
   display: flex;
   flex-direction: column;
 }
+
+.flatpickr {
+  color: var(--main-grey-text-color);
+}
+
+.flatpickr-day.selected {
+  background-color: var(--orange-color);
+}

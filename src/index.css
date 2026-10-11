@@ -26,12 +26,14 @@
 
   --orange-color: #fc9b09;
 
+  --green-color: #32cd32;
+
   --blue-button-color: #5286ec;
   --blue-focus-button-color: #2a6ae8;
 
-  --light-grey-color: #faf9f8;
-  --grey-color: #c7c7c7;
-  --dark-grey-color: #b3b3b3;
+  --light-grey-color: rgb(250, 249, 248);
+  --grey-color: rgb(199, 199, 199);
+  --dark-grey-color: rgb(179, 179, 179);
 
   --main-grey-text-color: #37373f;
 
