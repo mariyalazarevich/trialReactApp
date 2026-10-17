@@ -5,11 +5,13 @@ import styles from './orders.module.css';
 import { useNavigate } from 'react-router';
 import { IOrder } from 'src/interfaces/orderInterface';
 import { useEffect, useMemo, useState } from 'react';
-import { getAllOrders } from 'src/store/api/orderApiFunctions';
 import { format } from 'date-fns';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/confetti.css';
 import { Russian } from 'flatpickr/dist/l10n/ru';
+import { getAllOrders } from 'src/features/orders/getOrders';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from 'src/app/store';
 
 type Filters = {
   sinceDate: Date | undefined;
@@ -25,7 +27,11 @@ export const getAllFutureOrders = (allOrders: IOrder[]) => {
 
 export const Orders = () => {
   const navigate = useNavigate();
-  const [allOrders, setAllOrders] = useState<IOrder[]>([]);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
+
   const [sortBy, setSortBy] = useState<'date' | 'name'>('date');
   const [filters, setFilters] = useState<Filters>({
     sinceDate: undefined,
@@ -34,17 +40,11 @@ export const Orders = () => {
   });
 
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const response = await getAllOrders();
-        setAllOrders(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error('Failed to get user orders:', error);
-      }
-    };
-    getOrders();
-  }, []);
+    dispatch(getAllOrders());
+    if (allOrdersError) {
+      console.log(allOrdersError);
+    }
+  }, [allOrdersError, dispatch]);
 
   const showedOrders = useMemo(() => {
     const today = new Date();

@@ -3,11 +3,12 @@ import styles from './analytics.module.css';
 import { UserContext } from 'src/contexts/userContext';
 import { Header } from '@components/header/Header';
 import { useNavigate } from 'react-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { IOrder } from 'src/interfaces/orderInterface';
-import { IUser } from 'src/interfaces/userInterface';
-import { getAllUsers } from 'src/store/api/userApiFunctions';
-import { getAllOrders } from 'src/store/api/orderApiFunctions';
+import { getAllUsers } from 'src/features/users/getUsers';
+import { getAllOrders } from 'src/features/orders/getOrders';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from 'src/app/store';
 import { format } from 'date-fns';
 import {
   Bar,
@@ -62,31 +63,21 @@ const getMonthesProfit = (allOrders: IOrder[]) => {
 
 export const Analytics = () => {
   const navigate = useNavigate();
-  const [allUsers, setAllUsers] = useState<IUser[]>([]);
-  const [allOrders, setAllOrders] = useState<IOrder[]>([]);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const allUsersError = useSelector((state: RootState) => state.allUsers.error);
+
+  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await getAllUsers();
-        setAllUsers(response.data);
-      } catch (error) {
-        console.error('Failed to get users:', error);
-      }
-    };
-
-    const getOrders = async () => {
-      try {
-        const response = await getAllOrders();
-        setAllOrders(response.data);
-      } catch (error) {
-        console.error('Failed to get orders:', error);
-      }
-    };
-
-    getUsers();
-    getOrders();
-  }, []);
+    dispatch(getAllUsers());
+    dispatch(getAllOrders());
+    if (allOrdersError || allUsersError) {
+      console.log(allOrdersError, allUsersError);
+    }
+  }, [dispatch, allOrdersError, allUsersError]);
 
   const bestTimeData = useMemo(() => getBestTimeData(allOrders), [allOrders]);
   const ordersStatusesData = useMemo(() => getOrdersStatuses(allOrders), [allOrders]);

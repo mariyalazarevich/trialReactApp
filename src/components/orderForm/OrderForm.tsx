@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './orderForm.module.css';
 import { Controller, RegisterOptions, useForm } from 'react-hook-form';
-import { createOrder } from 'src/store/api/orderApiFunctions';
+import { createOrder } from 'src/features/orders/createOrder';
 import { useNavigate } from 'react-router';
 import { IUserContext } from 'src/contexts/userContext';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/confetti.css';
 import { Russian } from 'flatpickr/dist/l10n/ru';
 import { IOrderForm } from 'src/interfaces/orderFormInterface';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from 'src/app/store';
 
 type FormElement = {
   label: string;
@@ -89,15 +91,15 @@ const today = new Date(Date.now());
 export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch<AppDispatch>();
+  const status = useSelector((state: RootState) => state.createOrder.status);
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<IOrderForm>();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
 
   const submitForm = async (data: IOrderForm) => {
     if (!isAuthorizedUser) {
@@ -116,163 +118,168 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
       surname,
       tel,
     };
-    setIsLoading(true);
-    const response = await createOrder(order);
-    if (response.status === 200) {
-      setTimeout(() => setIsSuccess(true), 1000);
-    } else {
-      console.log(response.status + ' ' + response.message);
-      setTimeout(() => setIsSuccess(false), 1000);
-    }
+    dispatch(createOrder(order));
   };
 
-  if (isSuccess) {
-    setTimeout(() => navigate('/'), 1000);
-    return <div className={styles.successPage}>Спасибо за вашу заяку!</div>;
-  }
-
-  if (isSuccess === false) {
-    setTimeout(() => navigate('/'), 2000);
-    return <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>;
-  }
+  useEffect(() => {
+    if (status === 'succeeded') {
+      setTimeout(() => navigate('/'), 1000);
+    }
+    if (status === 'failed') {
+      setTimeout(() => navigate('/'), 2000);
+    }
+  }, [status]);
 
   return (
-    <form onSubmit={handleSubmit(submitForm)} noValidate>
-      {FORM_ELEMENTS.map((element, index) => (
-        <div className={styles.formElement} key={index + element.label}>
-          <label className={styles.label} htmlFor={element.id}>
-            {element.label}
-            <span>*</span>
-          </label>
+    <>
+      {status === 'succeeded' ? (
+        <div className={styles.successPage}>Спасибо за вашу заяку!</div>
+      ) : status === 'failed' ? (
+        <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
+      ) : (
+        <form onSubmit={handleSubmit(submitForm)} noValidate>
+          {FORM_ELEMENTS.map((element, index) => (
+            <div className={styles.formElement} key={index + element.label}>
+              <label className={styles.label} htmlFor={element.id}>
+                {element.label}
+                <span>*</span>
+              </label>
 
-          {element.id === 'date' ? (
-            <Controller
-              name="date"
-              control={control}
-              rules={{
-                required: 'Это поле обязательно',
-              }}
-              render={({ field }) => (
-                <Flatpickr
-                  value={field.value}
-                  onChange={dateStr => field.onChange(dateStr)}
-                  options={{
-                    dateFormat: 'd.m.Y',
-                    minDate: 'today',
-                    locale: Russian,
+              {element.id === 'date' ? (
+                <Controller
+                  name="date"
+                  control={control}
+                  rules={{
+                    required: 'Это поле обязательно',
                   }}
+                  render={({ field }) => (
+                    <Flatpickr
+                      value={field.value}
+                      onChange={dateStr => field.onChange(dateStr)}
+                      options={{
+                        dateFormat: 'd.m.Y',
+                        minDate: 'today',
+                        locale: Russian,
+                      }}
+                      className={styles.inputField}
+                      placeholder="02.10.2026"
+                    />
+                  )}
+                />
+              ) : (
+                <input
+                  {...register(element.id, element.rules)}
+                  type={element.type}
                   className={styles.inputField}
-                  placeholder="02.10.2026"
+                  placeholder={element.placeholder}
+                  id={element.id}
                 />
               )}
-            />
-          ) : (
-            <input
-              {...register(element.id, element.rules)}
-              type={element.type}
-              className={styles.inputField}
-              placeholder={element.placeholder}
-              id={element.id}
-            />
-          )}
 
-          {errors[element.id] && (
-            <p className={styles.error}>{errors[element.id]?.message?.toString()}</p>
-          )}
-        </div>
-      ))}
+              {errors[element.id] && (
+                <p className={styles.error}>{errors[element.id]?.message?.toString()}</p>
+              )}
+            </div>
+          ))}
 
-      <div className={styles.formElement}>
-        <label className={styles.label}>
-          Данные карты<span>*</span>
-        </label>
+          <div className={styles.formElement}>
+            <label className={styles.label}>
+              Данные карты<span>*</span>
+            </label>
 
-        <div className={styles.cardNumber}>
-          <input
-            {...register('cardNumber', {
-              required: 'Это поле обязательно',
-              pattern: {
-                value:
-                  /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$/,
-                message: 'Неверный формат данных',
-              },
-            })}
-            id="cardNumber"
-            type="number"
-            className={styles.inputField}
-            placeholder="Номер карты"
-          />
-          {errors.cardNumber && (
-            <p className={styles.error}>{errors.cardNumber?.message?.toString()}</p>
-          )}
-        </div>
+            <div className={styles.cardNumber}>
+              <input
+                {...register('cardNumber', {
+                  required: 'Это поле обязательно',
+                  pattern: {
+                    value:
+                      /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$/,
+                    message: 'Неверный формат данных',
+                  },
+                })}
+                id="cardNumber"
+                type="number"
+                className={styles.inputField}
+                placeholder="Номер карты"
+              />
+              {errors.cardNumber && (
+                <p className={styles.error}>{errors.cardNumber?.message?.toString()}</p>
+              )}
+            </div>
 
-        <div className={styles.cardInfo}>
-          <div className={styles.cardExpires}>
-            <input
-              {...register('cardExpires', {
-                required: 'Это поле обязательно',
-                validate: (value: string) => {
-                  const expiresRegEx = /^(0[1-9]|1[0-2])\/?([0-9]{2}|[0-9]{4})$/;
-                  if (!expiresRegEx.test(value)) {
-                    return 'Неверный формат данных';
-                  }
-                  const [month, year] = value.split('/');
-                  const isYearValid =
-                    Number(year) >= today.getFullYear() && Number(year) <= today.getFullYear() + 5;
-                  const isMonthValid = Number(month) >= 1 && Number(month) <= 12;
-                  return (isMonthValid && isYearValid) || 'Неверный формат данных';
-                },
-              })}
-              id="cardExpires"
-              type="text"
-              className={styles.inputField}
-              placeholder="Срок действия"
-            />
+            <div className={styles.cardInfo}>
+              <div className={styles.cardExpires}>
+                <input
+                  {...register('cardExpires', {
+                    required: 'Это поле обязательно',
+                    validate: (value: string) => {
+                      const expiresRegEx = /^(0[1-9]|1[0-2])\/?([0-9]{2}|[0-9]{4})$/;
+                      if (!expiresRegEx.test(value)) {
+                        return 'Неверный формат данных';
+                      }
+                      const [month, year] = value.split('/');
+                      const isYearValid =
+                        Number(year) >= today.getFullYear() &&
+                        Number(year) <= today.getFullYear() + 5;
+                      const isMonthValid = Number(month) >= 1 && Number(month) <= 12;
+                      return (isMonthValid && isYearValid) || 'Неверный формат данных';
+                    },
+                  })}
+                  id="cardExpires"
+                  type="text"
+                  className={styles.inputField}
+                  placeholder="Срок действия"
+                />
 
-            {errors.cardExpires && (
-              <p className={styles.error}>{errors.cardExpires.message?.toString()}</p>
+                {errors.cardExpires && (
+                  <p className={styles.error}>{errors.cardExpires.message?.toString()}</p>
+                )}
+              </div>
+
+              <div className={styles.cardCVV}>
+                <input
+                  {...register('cardCVV', {
+                    required: 'Это поле обязательно',
+                    pattern: { value: /^[0-9]{3}$/, message: 'Неверный формат данных' },
+                  })}
+                  id="cardCVV"
+                  type="number"
+                  className={styles.inputField}
+                  placeholder="CVV"
+                />
+                {errors.cardCVV && (
+                  <p className={styles.error}>{errors.cardCVV?.message?.toString()}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.inputCheckbox}>
+            <div className={styles.checkBox}>
+              <input
+                {...register('userAgreement', { required: 'Это поле обязательно' })}
+                id="userAgreement"
+                type="checkbox"
+              />
+              <label> Я согласен с пользовательским соглашением и публичной офертой</label>
+            </div>
+
+            {errors.userAgreement && (
+              <p className={styles.error}>{errors.userAgreement.message?.toString()}</p>
             )}
           </div>
 
-          <div className={styles.cardCVV}>
-            <input
-              {...register('cardCVV', {
-                required: 'Это поле обязательно',
-                pattern: { value: /^[0-9]{3}$/, message: 'Неверный формат данных' },
-              })}
-              id="cardCVV"
-              type="number"
-              className={styles.inputField}
-              placeholder="CVV"
-            />
-            {errors.cardCVV && (
-              <p className={styles.error}>{errors.cardCVV?.message?.toString()}</p>
-            )}
+          <div className={styles.formButton}>
+            <input type="submit" value="Забронировать" />
           </div>
-        </div>
-      </div>
 
-      <div className={styles.inputCheckbox}>
-        <div className={styles.checkBox}>
-          <input
-            {...register('userAgreement', { required: 'Это поле обязательно' })}
-            id="userAgreement"
-            type="checkbox"
-          />
-          <label> Я согласен с пользовательским соглашением и публичной офертой</label>
-        </div>
-
-        {errors.userAgreement && (
-          <p className={styles.error}>{errors.userAgreement.message?.toString()}</p>
-        )}
-      </div>
-
-      <div className={styles.formButton}>
-        <input type="submit" value="Забронировать" />
-      </div>
-
-      {isLoading && <div>Ваши данные отправляются на сервер</div>}
-    </form>
+          {status === 'loading' && (
+            <p style={{ textAlign: 'center', margin: '10px 0' }}>
+              Данные отправляются на сервер...
+            </p>
+          )}
+        </form>
+      )}
+    </>
   );
 };

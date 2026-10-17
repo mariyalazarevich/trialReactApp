@@ -3,11 +3,13 @@ import { Header } from '@components/header/Header';
 import styles from './registration.module.css';
 import { AuthorizationForm } from '@components/authorizationForm/AuthorizationForm';
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
-import { createUser } from 'src/store/api/userApiFunctions';
+import { createUser } from 'src/features/users/createUser';
 import { UserContext } from 'src/contexts/userContext';
 import { IAuthForm } from 'src/interfaces/authFromInterface';
 import { RegisterOptions } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from 'src/app/store';
+import { useEffect } from 'react';
 
 type FormElement = {
   label: string;
@@ -86,14 +88,12 @@ const REGISTRATION_FORM_ELEMENTS: FormElement[] = [
 
 export const Registration = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const status = useSelector((state: RootState) => state.createUser.status);
+
   const registration = async (data: IAuthForm) => {
     const { name, surname, email, login, password } = data;
-    if (!name || !surname || !email) {
-      return;
-    }
     const user = {
       name,
       surname,
@@ -101,58 +101,47 @@ export const Registration = () => {
       login,
       password,
     };
-    setIsLoading(true);
-    const response = await createUser(user);
-    if (response.status === 200) {
-      setTimeout(() => setIsSuccess(true), 1000);
-    } else {
-      console.log(response.status + ' ' + response.message);
-      setIsSuccess(false);
-      setTimeout(() => setIsError(true), 1000);
+    if (user) {
+      dispatch(createUser(user));
     }
   };
 
-  if (isSuccess) {
-    setTimeout(() => navigate('/'), 1000);
-    return (
-      <>
-        <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
-        <h1>Регистрация</h1>
-        <div className={styles.successPage}>Регистрация прошла успешно!</div>
-        <Footer></Footer>
-      </>
-    );
-  }
-
-  if (isError) {
-    setTimeout(() => navigate('/'), 2000);
-    return (
-      <>
-        <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
-        <h1>Регистрация</h1>
-        <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
-        <Footer></Footer>
-      </>
-    );
-  }
+  useEffect(() => {
+    if (status === 'succeeded') {
+      setTimeout(() => navigate('/'), 1000);
+    }
+    if (status === 'failed') {
+      setTimeout(() => navigate('/'), 2000);
+    }
+  }, [status]);
 
   return (
     <>
       <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
       <h1>Регистрация</h1>
-      <AuthorizationForm
-        formElements={REGISTRATION_FORM_ELEMENTS}
-        submitButtonLabel="Зарегистрироваться"
-        submitButton={registration}
-      />
-      <div
-        className={styles.authorizationButtonContainer}
-        onClick={() => navigate('/authorization')}
-      >
-        <p className={styles.authorizationButton}>Уже есть аккаунт?</p>
-      </div>
-      {isLoading && (
-        <p style={{ textAlign: 'center', margin: '10px 0px' }}>Данные отправляются на сервер...</p>
+      {status === 'succeeded' ? (
+        <div className={styles.successPage}>Регистрация прошла успешно!</div>
+      ) : status === 'failed' ? (
+        <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
+      ) : (
+        <>
+          <AuthorizationForm
+            formElements={REGISTRATION_FORM_ELEMENTS}
+            submitButtonLabel="Зарегистрироваться"
+            submitButton={registration}
+          />
+          <div
+            className={styles.authorizationButtonContainer}
+            onClick={() => navigate('/authorization')}
+          >
+            <p className={styles.authorizationButton}>Уже есть аккаунт?</p>
+          </div>
+          {status === 'loading' && (
+            <p style={{ textAlign: 'center', margin: '10px 0' }}>
+              Данные отправляются на сервер...
+            </p>
+          )}
+        </>
       )}
       <Footer></Footer>
     </>

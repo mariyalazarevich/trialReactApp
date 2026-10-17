@@ -4,16 +4,14 @@ import { Footer } from '@components/footer/Footer';
 import { Header } from '@components/header/Header';
 import { useNavigate } from 'react-router';
 import { useState, useEffect, useMemo } from 'react';
-import { getAllUsers } from 'src/store/api/userApiFunctions';
 import { IUser } from 'src/interfaces/userInterface';
 import { IOrder } from 'src/interfaces/orderInterface';
-import { getAllOrders } from 'src/store/api/orderApiFunctions';
+import { getAllUsers } from 'src/features/users/getUsers';
+import { getAllOrders } from 'src/features/orders/getOrders';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from 'src/app/store';
 
 type SortField = 'surname' | 'name' | 'login' | 'orders';
-
-type Filters = {
-  active: string;
-};
 
 const getUsersOrders = (user: IUser, allOrders: IOrder[]) => {
   return allOrders.filter(order => order.userID === user._id);
@@ -22,48 +20,35 @@ const getUsersOrders = (user: IUser, allOrders: IOrder[]) => {
 export const Clients = () => {
   const navigate = useNavigate();
 
-  const [allUsers, setAllUsers] = useState<IUser[]>([]);
-  const [allOrders, setAllOrders] = useState<IOrder[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const allUsers = useSelector((state: RootState) => state.allUsers.users);
+  const allUsersError = useSelector((state: RootState) => state.allUsers.error);
+
+  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
 
   const [sortBy, setSortBy] = useState<SortField>('surname');
-
-  const [filters, setFilters] = useState<Filters>({
-    active: 'all',
-  });
+  const [filter, setFilters] = useState('all');
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await getAllUsers();
-        setAllUsers(response.data);
-      } catch (error) {
-        console.error('Failed to get users:', error);
-      }
-    };
-
-    const getOrders = async () => {
-      try {
-        const response = await getAllOrders();
-        setAllOrders(response.data);
-      } catch (error) {
-        console.error('Failed to get orders:', error);
-      }
-    };
-
-    getUsers();
-    getOrders();
-  }, []);
+    dispatch(getAllUsers());
+    dispatch(getAllOrders());
+    if (allOrdersError || allUsersError) {
+      console.log(allOrdersError, allUsersError);
+    }
+  }, [dispatch, allOrdersError, allUsersError]);
 
   const showedUsers = useMemo(() => {
     return [...allUsers]
       .filter(user => {
         const ordersCount = getUsersOrders(user, allOrders).length;
 
-        if (filters.active === 'non-active' && ordersCount !== 0) {
+        if (filter === 'non-active' && ordersCount !== 0) {
           return false;
         }
 
-        if (filters.active === 'active' && ordersCount === 0) {
+        if (filter === 'active' && ordersCount === 0) {
           return false;
         }
 
@@ -76,16 +61,14 @@ export const Clients = () => {
 
         return a[sortBy].localeCompare(b[sortBy], 'ru');
       });
-  }, [allUsers, allOrders, filters, sortBy]);
+  }, [allUsers, allOrders, filter, sortBy]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(event.target.value as SortField);
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilters({
-      active: event.target.value,
-    });
+    setFilters(event.target.value);
   };
 
   return (
@@ -117,7 +100,7 @@ export const Clients = () => {
           <div className={styles.filterGroup}>
             <label htmlFor="activeFilter">Активность</label>
 
-            <select id="activeFilter" value={filters.active} onChange={handleFilterChange}>
+            <select id="activeFilter" value={filter} onChange={handleFilterChange}>
               <option value="all">Все</option>
               <option value="non-active">Неактивные</option>
               <option value="active">Активные</option>
@@ -138,9 +121,7 @@ export const Clients = () => {
           <button
             className={styles.resetButton}
             onClick={() => {
-              setFilters({
-                active: 'all',
-              });
+              setFilters('all');
               setSortBy('surname');
             }}
           >

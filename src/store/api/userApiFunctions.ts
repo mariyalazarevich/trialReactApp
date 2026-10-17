@@ -68,7 +68,7 @@ export const updateUserByID = async (
   }
 };
 
-export const deleteOrderByID = async (id: string) => {
+export const deleteUserByID = async (id: string) => {
   try {
     const response = await axios.delete(`http://localhost:8000/api/users/delete/user/${id}`, {
       withCredentials: true,

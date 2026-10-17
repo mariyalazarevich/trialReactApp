@@ -3,20 +3,25 @@ import { Header } from '@components/header/Header';
 import { UserContext } from 'src/contexts/userContext';
 import styles from './currentTasks.module.css';
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
-import { getAllOrders } from 'src/store/api/orderApiFunctions';
+import { useEffect } from 'react';
 import { IOrder } from 'src/interfaces/orderInterface';
 import { format } from 'date-fns';
+import { getAllOrders } from 'src/features/orders/getOrders';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from 'src/app/store';
 
 const getAllFutureOrders = (allOrders: IOrder[]) => {
   const today = new Date(Date.now());
-  allOrders.sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime());
-  return allOrders.filter(order => new Date(order.dateTime) > today);
+  return [...allOrders]
+    .sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime())
+    .filter(order => new Date(order.dateTime) > today);
 };
 
 const getWaitingOrders = (allOrders: IOrder[]) => {
   const today = new Date(Date.now());
-  return allOrders.filter(order => order.status === 'waiting' && new Date(order.dateTime) > today);
+  return [...allOrders].filter(
+    order => order.status === 'waiting' && new Date(order.dateTime) > today
+  );
 };
 
 const getThisMonthOrders = (allOrders: IOrder[]) => {
@@ -24,7 +29,7 @@ const getThisMonthOrders = (allOrders: IOrder[]) => {
   const todayMonth = today.getMonth();
   const todayYear = today.getFullYear();
 
-  return allOrders.filter(order => {
+  return [...allOrders].filter(order => {
     const orderDate = new Date(order.dateTime);
     console.log(orderDate.getMonth());
     return orderDate.getMonth() === todayMonth && orderDate.getFullYear() === todayYear;
@@ -36,7 +41,7 @@ const getTodayOrders = (allOrders: IOrder[]) => {
   start.setHours(0, 0, 0, 0);
   const end = new Date();
   end.setHours(23, 59, 59, 999);
-  return allOrders.filter(order => {
+  return [...allOrders].filter(order => {
     const orderDate = new Date(order.dateTime);
     return orderDate > start && orderDate < end;
   });
@@ -45,21 +50,16 @@ const getTodayOrders = (allOrders: IOrder[]) => {
 export const CurrentTasks = () => {
   const navigate = useNavigate();
 
-  const [allOrders, setAllOrders] = useState<IOrder[]>([]);
-  //const [isEdit, setIsEdit] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
 
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const response = await getAllOrders();
-        setAllOrders(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error('Failed to get user orders:', error);
-      }
-    };
-    getOrders();
-  }, []);
+    dispatch(getAllOrders());
+    if (allOrdersError) {
+      console.log(allOrdersError);
+    }
+  }, [allOrdersError, dispatch]);
 
   const todayOrders = getTodayOrders(allOrders);
   const allFutureOrders = getAllFutureOrders(allOrders);

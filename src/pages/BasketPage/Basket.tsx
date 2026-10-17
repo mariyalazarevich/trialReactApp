@@ -1,19 +1,21 @@
 import { Footer } from '@components/footer/Footer';
 import { Header } from '@components/header/Header';
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IUserContext, UserContext } from 'src/contexts/userContext';
-import { getOrdersByUserID } from 'src/store/api/orderApiFunctions';
-import { IOrder } from 'src/interfaces/orderInterface';
+import { getOrdersByUserID } from 'src/features/orders/getOrdersByUserID';
 import styles from './basket.module.css';
 import { format, setDefaultOptions } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from 'src/app/store';
 
 export const Basket: React.FC<IUserContext> = ({ user, isAuthorizedUser }) => {
   const navigate = useNavigate();
   setDefaultOptions({ locale: ru });
 
-  const [userOrders, setUserOrders] = useState<IOrder[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const userOrders = useSelector((state: RootState) => state.ordersByUserID.orders);
 
   useEffect(() => {
     if (!isAuthorizedUser) {
@@ -27,17 +29,8 @@ export const Basket: React.FC<IUserContext> = ({ user, isAuthorizedUser }) => {
     if (!isAuthorizedUser) {
       return;
     }
-    const getOrders = async () => {
-      try {
-        const response = await getOrdersByUserID(user._id);
-        setUserOrders(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error('Failed to get user orders:', error);
-      }
-    };
-    getOrders();
-  }, [isAuthorizedUser, user._id]);
+    dispatch(getOrdersByUserID(user._id));
+  }, [isAuthorizedUser, user._id, dispatch]);
 
   if (!isAuthorizedUser) {
     return (
