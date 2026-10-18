@@ -68,6 +68,7 @@
   letter-spacing: 0%;
   margin: 0px;
   margin-bottom: 5px;
+  color: var(--main-grey-text-color);
 }
 
 .answer {
