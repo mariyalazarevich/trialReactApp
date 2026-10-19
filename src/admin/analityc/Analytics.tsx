@@ -24,6 +24,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
 
 const getBestTimeData = (allOrders: IOrder[]) => {
   const orderTimes = allOrders.map(order => format(order.dateTime, 'HH:mm'));
@@ -67,9 +68,11 @@ export const Analytics = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const allUsersError = useSelector((state: RootState) => state.allUsers.error);
+  const usersStatus = useSelector((state: RootState) => state.allUsers.status);
 
   const allOrders = useSelector((state: RootState) => state.allOrders.orders);
   const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
+  const ordersStatus = useSelector((state: RootState) => state.allOrders.status);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -101,75 +104,81 @@ export const Analytics = () => {
         </button>
       </div>
 
-      <div className={styles.charts}>
-        <div className={styles.bestTimeBarChart}>
-          <h3 className={styles.chartTitle}>Популярное время заказов</h3>
-          <p className={styles.chartDescription}>Количество заказов по часам</p>
-
-          <ResponsiveContainer width="100%" height="80%">
-            <BarChart data={bestTimeData}>
-              <XAxis dataKey="time" />
-              <YAxis allowDecimals={false} />
-              <Tooltip />
-              <Bar
-                dataKey="amount"
-                name="Количество заказов"
-                fill="#fc9b09"
-                radius={[5, 5, 0, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+      {ordersStatus === eStatus.error || usersStatus === eStatus.error ? (
+        <div className={styles.successPage}>
+          Что-то пошло не так. Попробуйте еще раз позже! {allOrdersError ?? allUsersError}
         </div>
+      ) : (
+        <div className={styles.charts}>
+          <div className={styles.bestTimeBarChart}>
+            <h3 className={styles.chartTitle}>Популярное время заказов</h3>
+            <p className={styles.chartDescription}>Количество заказов по часам</p>
 
-        <div className={styles.monthProfitLineChart}>
-          <h3 className={styles.chartTitle}>Прибыль по месяцам</h3>
-          <p className={styles.chartDescription}>Доход от принятых заказов</p>
+            <ResponsiveContainer width="100%" height="80%">
+              <BarChart data={bestTimeData}>
+                <XAxis dataKey="time" />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Bar
+                  dataKey="amount"
+                  name="Количество заказов"
+                  fill="#fc9b09"
+                  radius={[5, 5, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
 
-          <ResponsiveContainer width="100%" height="80%">
-            <LineChart data={monthesProfitData}>
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                dataKey="profit"
-                name="Прибыль"
-                stroke="#fc9b09"
-                strokeWidth={3}
-                dot={{ fill: '#fc9b09', r: 4 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <div className={styles.monthProfitLineChart}>
+            <h3 className={styles.chartTitle}>Прибыль по месяцам</h3>
+            <p className={styles.chartDescription}>Доход от принятых заказов</p>
+
+            <ResponsiveContainer width="100%" height="80%">
+              <LineChart data={monthesProfitData}>
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Line
+                  dataKey="profit"
+                  name="Прибыль"
+                  stroke="#fc9b09"
+                  strokeWidth={3}
+                  dot={{ fill: '#fc9b09', r: 4 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className={styles.statusOrdersPieChart}>
+            <h3 className={styles.chartTitle}>Статусы заказов</h3>
+            <p className={styles.chartDescription}>Распределение заказов по статусам</p>
+
+            <ResponsiveContainer width="100%" height="80%">
+              <PieChart>
+                <Pie
+                  data={ordersStatusesData}
+                  dataKey="amount"
+                  nameKey="status"
+                  cx="50%"
+                  cy="45%"
+                  outerRadius={75}
+                  label
+                >
+                  {ordersStatusesData.map((entry, index) => (
+                    <Cell key={entry.status} fill={['#fc9b09', '#e76f51', '#65a982'][index]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend
+                  formatter={value =>
+                    value === 'waiting' ? 'Ожидают' : value === 'cancelled' ? 'Отменены' : 'Приняты'
+                  }
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-
-        <div className={styles.statusOrdersPieChart}>
-          <h3 className={styles.chartTitle}>Статусы заказов</h3>
-          <p className={styles.chartDescription}>Распределение заказов по статусам</p>
-
-          <ResponsiveContainer width="100%" height="80%">
-            <PieChart>
-              <Pie
-                data={ordersStatusesData}
-                dataKey="amount"
-                nameKey="status"
-                cx="50%"
-                cy="45%"
-                outerRadius={75}
-                label
-              >
-                {ordersStatusesData.map((entry, index) => (
-                  <Cell key={entry.status} fill={['#fc9b09', '#e76f51', '#65a982'][index]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend
-                formatter={value =>
-                  value === 'waiting' ? 'Ожидают' : value === 'cancelled' ? 'Отменены' : 'Приняты'
-                }
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      )}
       <Footer></Footer>
     </>
   );

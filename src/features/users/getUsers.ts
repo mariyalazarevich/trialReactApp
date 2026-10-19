@@ -1,16 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { IUser } from 'src/interfaces/userInterface';
 import axios from 'axios';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
+import { IReduxState } from 'src/interfaces/reduxStateInterface';
+import { IUser } from 'src/interfaces/userInterface';
 
-type UsersState = {
+type UsersState = IReduxState & {
   users: IUser[];
-  status: string;
-  error: string | undefined;
 };
 
 const initialState: UsersState = {
   users: [],
-  status: 'idle',
+  status: eStatus.idle,
   error: undefined,
 };
 
@@ -28,14 +28,14 @@ const allUsersSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getAllUsers.pending, state => {
-        state.status = 'loading';
+        state.status = eStatus.loading;
       })
       .addCase(getAllUsers.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = eStatus.successfull;
         state.users = action.payload;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = eStatus.error;
         state.error = action.error.message;
       });
   },

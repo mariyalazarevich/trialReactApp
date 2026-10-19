@@ -1,10 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-type OrdersState = {
-  status: string;
-  error: string | undefined;
-};
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
+import { IReduxState } from 'src/interfaces/reduxStateInterface';
 
 interface IOrder {
   dateTime: string;
@@ -14,8 +11,8 @@ interface IOrder {
   tel: string;
 }
 
-const initialState: OrdersState = {
-  status: 'idle',
+const initialState: IReduxState = {
+  status: eStatus.idle,
   error: undefined,
 };
 
@@ -33,13 +30,13 @@ const createOrderSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(createOrder.pending, state => {
-        state.status = 'loading';
+        state.status = eStatus.loading;
       })
       .addCase(createOrder.fulfilled, state => {
-        state.status = 'successfull';
+        state.status = eStatus.successfull;
       })
       .addCase(createOrder.rejected, (state, action) => {
-        state.status = 'error';
+        state.status = eStatus.error;
         state.error = action.error.message;
       });
   },

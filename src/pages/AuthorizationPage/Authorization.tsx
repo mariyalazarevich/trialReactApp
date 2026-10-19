@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router';
 import { IUserContext, UserContext } from 'src/contexts/userContext';
 import { RegisterOptions } from 'react-hook-form';
 import { IAuthForm } from 'src/interfaces/authFromInterface';
-import { logIn } from 'src/features/users/logIn';
+import { logIn, resetLoginState } from 'src/features/users/logIn';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from 'src/app/store';
 import { useEffect } from 'react';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
 
 type FormElement = {
   label: string;
@@ -51,31 +52,41 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
   const userError = useSelector((state: RootState) => state.logIn.error);
   const status = useSelector((state: RootState) => state.logIn.status);
 
-  console.log(status);
-
   const authorization = async (data: IAuthForm) => {
     const { login, password } = data;
     const user = { login, password };
     dispatch(logIn(user));
-    console.log(status);
   };
 
   useEffect(() => {
-    if (status === 'succeeded') {
+    dispatch(resetLoginState());
+  }, [dispatch]);
+
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+    if (status === eStatus.successfull) {
       setUser(authorizedUser.login, authorizedUser.token, authorizedUser._id);
 
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         navigate('/', { replace: true });
       }, 2000);
     }
 
-    if (status === 'failed') {
+    if (status === eStatus.error) {
       console.log(userError);
-      setTimeout(() => {
+
+      timeoutId = setTimeout(() => {
         navigate('/', { replace: true });
       }, 2000);
     }
-  }, [status]);
+
+    return () => {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [status, authorizedUser, userError, setUser, navigate]);
 
   return (
     <>
@@ -83,9 +94,9 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
 
       <h1>Авторизация</h1>
 
-      {status === 'succeeded' ? (
+      {status === eStatus.successfull ? (
         <div className={styles.successPage}>Авторизация прошла успешно!</div>
-      ) : status === 'failed' ? (
+      ) : status === eStatus.error ? (
         <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
       ) : (
         <>
@@ -102,14 +113,13 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
             <p className={styles.registrationButton}>Еще нет аккаунта?</p>
           </div>
 
-          {status === 'loading' && (
+          {status === eStatus.loading && (
             <p style={{ textAlign: 'center', margin: '10px 0' }}>
               Данные отправляются на сервер...
             </p>
           )}
         </>
       )}
-
       <Footer />
     </>
   );

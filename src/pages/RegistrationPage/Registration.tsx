@@ -10,6 +10,7 @@ import { RegisterOptions } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from 'src/app/store';
 import { useEffect } from 'react';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
 
 type FormElement = {
   label: string;
@@ -107,10 +108,10 @@ export const Registration = () => {
   };
 
   useEffect(() => {
-    if (status === 'succeeded') {
+    if (status === eStatus.successfull) {
       setTimeout(() => navigate('/'), 1000);
     }
-    if (status === 'failed') {
+    if (status === eStatus.error) {
       setTimeout(() => navigate('/'), 2000);
     }
   }, [status]);
@@ -119,9 +120,9 @@ export const Registration = () => {
     <>
       <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
       <h1>Регистрация</h1>
-      {status === 'succeeded' ? (
+      {status === eStatus.successfull ? (
         <div className={styles.successPage}>Регистрация прошла успешно!</div>
-      ) : status === 'failed' ? (
+      ) : status === eStatus.error ? (
         <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
       ) : (
         <>
@@ -136,7 +137,7 @@ export const Registration = () => {
           >
             <p className={styles.authorizationButton}>Уже есть аккаунт?</p>
           </div>
-          {status === 'loading' && (
+          {status === eStatus.loading && (
             <p style={{ textAlign: 'center', margin: '10px 0' }}>
               Данные отправляются на сервер...
             </p>

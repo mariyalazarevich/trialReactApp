@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import { getAllOrders } from 'src/features/orders/getOrders';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from 'src/app/store';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
 
 const getAllFutureOrders = (allOrders: IOrder[]) => {
   const today = new Date(Date.now());
@@ -53,6 +54,8 @@ export const CurrentTasks = () => {
   const dispatch = useDispatch<AppDispatch>();
   const allOrders = useSelector((state: RootState) => state.allOrders.orders);
   const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
+  const status = useSelector((state: RootState) => state.logIn.status);
+  const closestOrders = useSelector((state: RootState) => state.allOrders.orders.slice(0, 7));
 
   useEffect(() => {
     dispatch(getAllOrders());
@@ -65,7 +68,6 @@ export const CurrentTasks = () => {
   const allFutureOrders = getAllFutureOrders(allOrders);
   const thisMonthOrders = getThisMonthOrders(allOrders);
   const waitingOrders = getWaitingOrders(allOrders);
-  const closestOrders = getAllFutureOrders(allOrders).slice(0, 7);
 
   return (
     <>
@@ -86,58 +88,68 @@ export const CurrentTasks = () => {
         </button>
       </div>
 
-      <div className={styles.mainInfoTable}>
-        <div className={styles.infoCard}>
-          <p className={styles.title}>Все будущие заказы</p>
-          <p className={styles.value}>{allFutureOrders.length}</p>
+      {status === eStatus.error ? (
+        <div className={styles.successPage}>
+          Что-то пошло не так. Попробуйте еще раз позже! {allOrdersError}
         </div>
+      ) : (
+        <>
+          <div className={styles.mainInfoTable}>
+            <div className={styles.infoCard}>
+              <p className={styles.title}>Все будущие заказы</p>
+              <p className={styles.value}>{allFutureOrders.length}</p>
+            </div>
 
-        <div className={styles.infoCard}>
-          <p className={styles.title}>В этом месяце</p>
-          <p className={styles.value}>{thisMonthOrders.length}</p>
-        </div>
+            <div className={styles.infoCard}>
+              <p className={styles.title}>В этом месяце</p>
+              <p className={styles.value}>{thisMonthOrders.length}</p>
+            </div>
 
-        <div className={styles.infoCard}>
-          <p className={styles.title}>Заказы на сегодня</p>
-          <p className={styles.value}>{todayOrders.length}</p>
-        </div>
+            <div className={styles.infoCard}>
+              <p className={styles.title}>Заказы на сегодня</p>
+              <p className={styles.value}>{todayOrders.length}</p>
+            </div>
 
-        <div className={styles.infoCard}>
-          <p className={styles.title}>Ожидающие подтверждения</p>
-          <p className={styles.value}>{waitingOrders.length}</p>
-        </div>
-      </div>
-
-      <div className={styles.ordersTable}>
-        <p className={styles.tableTitle}>Ближайшие заказы</p>
-
-        <div className={styles.table}>
-          <div className={styles.tableHeader}>
-            <div>Дата</div>
-            <div>Время</div>
-            <div>Имя</div>
-            <div>Телефон</div>
-            <div>Статус</div>
+            <div className={styles.infoCard}>
+              <p className={styles.title}>Ожидающие подтверждения</p>
+              <p className={styles.value}>{waitingOrders.length}</p>
+            </div>
           </div>
 
-          {closestOrders.map(order => {
-            const currentOrderDateTime = new Date(order.dateTime);
-            return (
-              <div className={styles.tableRow} key={order._id}>
-                <div>{format(currentOrderDateTime, 'dd.MM.yyyy')}</div>
-                <div>{format(currentOrderDateTime, 'HH:mm')}</div>
-                <div>
-                  {order.name} {order.surname}
-                </div>
-                <div>{order.tel}</div>
-                <div>
-                  <span className={`${styles.status} ${styles[order.status]}`}>{order.status}</span>
-                </div>
+          <div className={styles.ordersTable}>
+            <p className={styles.tableTitle}>Ближайшие заказы</p>
+
+            <div className={styles.table}>
+              <div className={styles.tableHeader}>
+                <div>Дата</div>
+                <div>Время</div>
+                <div>Имя</div>
+                <div>Телефон</div>
+                <div>Статус</div>
               </div>
-            );
-          })}
-        </div>
-      </div>
+
+              {closestOrders.map(order => {
+                const currentOrderDateTime = new Date(order.dateTime);
+                return (
+                  <div className={styles.tableRow} key={order._id}>
+                    <div>{format(currentOrderDateTime, 'dd.MM.yyyy')}</div>
+                    <div>{format(currentOrderDateTime, 'HH:mm')}</div>
+                    <div>
+                      {order.name} {order.surname}
+                    </div>
+                    <div>{order.tel}</div>
+                    <div>
+                      <span className={`${styles.status} ${styles[order.status]}`}>
+                        {order.status}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
       <Footer></Footer>
     </>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './orderForm.module.css';
 import { Controller, RegisterOptions, useForm } from 'react-hook-form';
 import { createOrder } from 'src/features/orders/createOrder';
@@ -10,6 +10,7 @@ import { Russian } from 'flatpickr/dist/l10n/ru';
 import { IOrderForm } from 'src/interfaces/orderFormInterface';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from 'src/app/store';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
 
 type FormElement = {
   label: string;
@@ -122,19 +123,19 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
   };
 
   useEffect(() => {
-    if (status === 'succeeded') {
+    if (status === eStatus.successfull) {
       setTimeout(() => navigate('/'), 1000);
     }
-    if (status === 'failed') {
+    if (status === eStatus.error) {
       setTimeout(() => navigate('/'), 2000);
     }
   }, [status]);
 
   return (
     <>
-      {status === 'succeeded' ? (
+      {status === eStatus.successfull ? (
         <div className={styles.successPage}>Спасибо за вашу заяку!</div>
-      ) : status === 'failed' ? (
+      ) : status === eStatus.error ? (
         <div className={styles.successPage}>Что-то пошло не так. Попробуйте еще раз позже!</div>
       ) : (
         <form onSubmit={handleSubmit(submitForm)} noValidate>
@@ -273,7 +274,7 @@ export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
             <input type="submit" value="Забронировать" />
           </div>
 
-          {status === 'loading' && (
+          {status === eStatus.loading && (
             <p style={{ textAlign: 'center', margin: '10px 0' }}>
               Данные отправляются на сервер...
             </p>

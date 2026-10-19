@@ -1,16 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { IOrder } from 'src/interfaces/orderInterface';
 import axios from 'axios';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
+import { IReduxState } from 'src/interfaces/reduxStateInterface';
+import { IOrder } from 'src/interfaces/orderInterface';
 
-type OrdersState = {
+type OrdersState = IReduxState & {
   orders: IOrder[];
-  status: string;
-  error: string | undefined;
 };
 
 const initialState: OrdersState = {
   orders: [],
-  status: 'idle',
+  status: eStatus.idle,
   error: undefined,
 };
 
@@ -31,14 +31,14 @@ const ordersByUserIDSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getOrdersByUserID.pending, state => {
-        state.status = 'loading';
+        state.status = eStatus.loading;
       })
       .addCase(getOrdersByUserID.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = eStatus.successfull;
         state.orders = action.payload;
       })
       .addCase(getOrdersByUserID.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = eStatus.error;
         state.error = action.error.message;
       });
   },

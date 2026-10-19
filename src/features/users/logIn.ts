@@ -1,21 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
+import { IReduxState } from 'src/interfaces/reduxStateInterface';
 
 interface IUser {
-  readonly login: string | null;
-  readonly token: string | null;
-  readonly _id: string | null;
+  user: {
+    readonly login: string | null;
+    readonly token: string | null;
+    readonly _id: string | null;
+  };
 }
 
-type UsersState = {
-  user: IUser;
-  status: string;
-  error: string | undefined;
-};
+type UsersState = IReduxState & IUser;
 
 const initialState: UsersState = {
   user: { login: '', token: '', _id: '' },
-  status: 'idle',
+  status: eStatus.idle,
   error: undefined,
 };
 
@@ -32,21 +32,24 @@ export const logIn = createAsyncThunk(
 const logInSlice = createSlice({
   name: 'logIn',
   initialState,
-  reducers: {},
+  reducers: {
+    resetLoginState: () => initialState,
+  },
   extraReducers: builder => {
     builder
       .addCase(logIn.pending, state => {
-        state.status = 'loading';
+        state.status = eStatus.loading;
       })
       .addCase(logIn.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = eStatus.successfull;
         state.user = action.payload;
       })
       .addCase(logIn.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = eStatus.error;
         state.error = action.error.message;
       });
   },
 });
 
 export default logInSlice.reducer;
+export const { resetLoginState } = logInSlice.actions;
