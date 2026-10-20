@@ -2,9 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import allUsersReducer from '../features/users/getUsers';
 import logInReducer from '../features/users/logIn';
 import createUserReducer from '../features/users/createUser';
-import allOrdersReducer from '../features/orders/getOrders';
-import ordersByUserIDSliceReducer from '../features/orders/getOrdersByUserID';
+import ordersReducer from '../features/orders/getOrders';
 import createOrderReducer from '../features/orders/createOrder';
+import authorizedUserReducer from 'src/features/user/authorizedUser';
 
 export const store = configureStore({
   reducer: {
@@ -12,9 +12,10 @@ export const store = configureStore({
     logIn: logInReducer,
     createUser: createUserReducer,
 
-    allOrders: allOrdersReducer,
-    ordersByUserID: ordersByUserIDSliceReducer,
+    orders: ordersReducer,
     createOrder: createOrderReducer,
+
+    authorizedUser: authorizedUserReducer,
   },
 });
 

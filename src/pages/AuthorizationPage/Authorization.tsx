@@ -3,7 +3,6 @@ import { Header } from '@components/header/Header';
 import styles from './authorization.module.css';
 import { AuthorizationForm } from '@components/authorizationForm/AuthorizationForm';
 import { useNavigate } from 'react-router';
-import { IUserContext, UserContext } from 'src/contexts/userContext';
 import { RegisterOptions } from 'react-hook-form';
 import { IAuthForm } from 'src/interfaces/authFromInterface';
 import { logIn, resetLoginState } from 'src/features/users/logIn';
@@ -11,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from 'src/app/store';
 import { useEffect } from 'react';
 import { EStatus as eStatus } from 'src/enumerations/statusEnumeration';
+import { setUser } from 'src/features/user/authorizedUser';
 
 type FormElement = {
   label: string;
@@ -43,7 +43,7 @@ const AUTHORIZATION_FORM_ELEMENTS: FormElement[] = [
   },
 ];
 
-export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
+export const Authorization = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -66,7 +66,7 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
     if (status === eStatus.successfull) {
-      setUser(authorizedUser.login, authorizedUser.token, authorizedUser._id);
+      dispatch(setUser(authorizedUser));
 
       timeoutId = setTimeout(() => {
         navigate('/', { replace: true });
@@ -86,11 +86,11 @@ export const Authorization: React.FC<IUserContext> = ({ setUser }) => {
         clearTimeout(timeoutId);
       }
     };
-  }, [status, authorizedUser, userError, setUser, navigate]);
+  }, [status]);
 
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
 
       <h1>Авторизация</h1>
 

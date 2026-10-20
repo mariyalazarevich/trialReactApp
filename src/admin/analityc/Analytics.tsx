@@ -1,6 +1,5 @@
 import { Footer } from '@components/footer/Footer';
 import styles from './analytics.module.css';
-import { UserContext } from 'src/contexts/userContext';
 import { Header } from '@components/header/Header';
 import { useNavigate } from 'react-router';
 import { useEffect, useMemo } from 'react';
@@ -70,9 +69,9 @@ export const Analytics = () => {
   const allUsersError = useSelector((state: RootState) => state.allUsers.error);
   const usersStatus = useSelector((state: RootState) => state.allUsers.status);
 
-  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
-  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
-  const ordersStatus = useSelector((state: RootState) => state.allOrders.status);
+  const allOrders = useSelector((state: RootState) => state.orders.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.orders.allOrders.error);
+  const ordersStatus = useSelector((state: RootState) => state.orders.allOrders.status);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -88,9 +87,15 @@ export const Analytics = () => {
 
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
       <div className={styles.categoryButtons}>
-        <button className={styles.toBookButton} onClick={() => navigate('/admin/task')}>
+        <button
+          className={styles.toBookButton}
+          onClick={() => {
+            console.log('/admin/tasks');
+            navigate('/admin/tasks');
+          }}
+        >
           Главная
         </button>
         <button className={styles.toBookButton} onClick={() => navigate('/admin/orders')}>

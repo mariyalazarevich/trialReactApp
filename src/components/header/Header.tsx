@@ -1,10 +1,13 @@
 import { UserComponent } from '@components/userComponent/UserComponent';
 import styles from './header.module.css';
 import { useNavigate } from 'react-router';
-import { IUserContext } from 'src/contexts/userContext';
+import { useSelector } from 'react-redux';
+import { type RootState } from 'src/app/store';
 
-export const Header: React.FC<IUserContext> = ({ user, isAuthorizedUser }) => {
+export const Header = () => {
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.authorizedUser.user);
+  const isAuthorizedUser = useSelector((state: RootState) => state.authorizedUser.isAuthorized);
 
   return (
     <header>

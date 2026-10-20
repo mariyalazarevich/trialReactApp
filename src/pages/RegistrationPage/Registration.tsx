@@ -4,7 +4,6 @@ import styles from './registration.module.css';
 import { AuthorizationForm } from '@components/authorizationForm/AuthorizationForm';
 import { useNavigate } from 'react-router';
 import { createUser } from 'src/features/users/createUser';
-import { UserContext } from 'src/contexts/userContext';
 import { IAuthForm } from 'src/interfaces/authFromInterface';
 import { RegisterOptions } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
@@ -118,7 +117,7 @@ export const Registration = () => {
 
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
       <h1>Регистрация</h1>
       {status === eStatus.successfull ? (
         <div className={styles.successPage}>Регистрация прошла успешно!</div>

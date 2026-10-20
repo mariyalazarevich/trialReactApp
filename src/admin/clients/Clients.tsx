@@ -1,4 +1,3 @@
-import { UserContext } from 'src/contexts/userContext';
 import styles from './clients.module.css';
 import { Footer } from '@components/footer/Footer';
 import { Header } from '@components/header/Header';
@@ -27,9 +26,9 @@ export const Clients = () => {
   const allUsersError = useSelector((state: RootState) => state.allUsers.error);
   const usersStatus = useSelector((state: RootState) => state.allUsers.status);
 
-  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
-  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
-  const ordersStatus = useSelector((state: RootState) => state.allOrders.status);
+  const allOrders = useSelector((state: RootState) => state.orders.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.orders.allOrders.error);
+  const ordersStatus = useSelector((state: RootState) => state.orders.allOrders.status);
 
   const [sortBy, setSortBy] = useState<SortField>('surname');
   const [filter, setFilters] = useState('all');
@@ -76,7 +75,7 @@ export const Clients = () => {
 
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
 
       <div className={styles.categoryButtons}>
         <button className={styles.toBookButton} onClick={() => navigate('/admin/tasks')}>

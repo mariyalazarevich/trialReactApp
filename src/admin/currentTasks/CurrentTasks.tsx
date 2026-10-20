@@ -1,6 +1,5 @@
 import { Footer } from '@components/footer/Footer';
 import { Header } from '@components/header/Header';
-import { UserContext } from 'src/contexts/userContext';
 import styles from './currentTasks.module.css';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
@@ -52,10 +51,12 @@ export const CurrentTasks = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
-  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
-  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
+  const allOrders = useSelector((state: RootState) => state.orders.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.orders.allOrders.error);
   const status = useSelector((state: RootState) => state.logIn.status);
-  const closestOrders = useSelector((state: RootState) => state.allOrders.orders.slice(0, 7));
+  const closestOrders = useSelector((state: RootState) =>
+    state.orders.allOrders.orders.slice(0, 7)
+  );
 
   useEffect(() => {
     dispatch(getAllOrders());
@@ -71,7 +72,7 @@ export const CurrentTasks = () => {
 
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
       <div className={styles.categoryButtons}>
         <button className={`${styles.toBookButton} ${styles.currentBookButton}`} disabled>
           Главная

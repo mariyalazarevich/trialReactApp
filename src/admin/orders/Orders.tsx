@@ -1,6 +1,5 @@
 import { Footer } from '@components/footer/Footer';
 import { Header } from '@components/header/Header';
-import { UserContext } from 'src/contexts/userContext';
 import styles from './orders.module.css';
 import { useNavigate } from 'react-router';
 import { IOrder } from 'src/interfaces/orderInterface';
@@ -30,8 +29,8 @@ export const Orders = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
-  const allOrders = useSelector((state: RootState) => state.allOrders.orders);
-  const allOrdersError = useSelector((state: RootState) => state.allOrders.error);
+  const allOrders = useSelector((state: RootState) => state.orders.allOrders.orders);
+  const allOrdersError = useSelector((state: RootState) => state.orders.allOrders.error);
   const status = useSelector((state: RootState) => state.logIn.status);
 
   const [sortBy, setSortBy] = useState<'date' | 'name'>('date');
@@ -99,7 +98,7 @@ export const Orders = () => {
 
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
 
       <div className={styles.categoryButtons}>
         <button className={styles.toBookButton} onClick={() => navigate('/admin/tasks')}>

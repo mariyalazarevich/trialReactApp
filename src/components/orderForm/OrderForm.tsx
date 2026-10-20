@@ -3,7 +3,6 @@ import styles from './orderForm.module.css';
 import { Controller, RegisterOptions, useForm } from 'react-hook-form';
 import { createOrder } from 'src/features/orders/createOrder';
 import { useNavigate } from 'react-router';
-import { IUserContext } from 'src/contexts/userContext';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/confetti.css';
 import { Russian } from 'flatpickr/dist/l10n/ru';
@@ -89,10 +88,11 @@ const FORM_ELEMENTS: FormElement[] = [
 
 const today = new Date(Date.now());
 
-export const OrderForm: React.FC<IUserContext> = ({ isAuthorizedUser }) => {
+export const OrderForm = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
+  const isAuthorizedUser = useSelector((state: RootState) => state.authorizedUser.isAuthorized);
   const status = useSelector((state: RootState) => state.createOrder.status);
 
   const {

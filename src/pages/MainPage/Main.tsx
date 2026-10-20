@@ -8,12 +8,11 @@ import { Photos } from '@sections/photos/Photos';
 import { Reviews } from '@sections/reviews/Revies';
 import { Schedule } from '@sections/schedule/Schedule';
 import { ShowInfoContext } from 'src/contexts/showInfoContext';
-import { UserContext } from 'src/contexts/userContext';
 
 export const Main = () => {
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
       <Banner></Banner>
       <AboutPhotoshoot></AboutPhotoshoot>
       <Photos></Photos>

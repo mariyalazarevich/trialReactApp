@@ -2,20 +2,21 @@ import { Footer } from '@components/footer/Footer';
 import { Header } from '@components/header/Header';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
-import { IUserContext, UserContext } from 'src/contexts/userContext';
-import { getOrdersByUserID } from 'src/features/orders/getOrdersByUserID';
+import { getOrdersByUserID } from 'src/features/orders/getOrders';
 import styles from './basket.module.css';
 import { format, setDefaultOptions } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from 'src/app/store';
 
-export const Basket: React.FC<IUserContext> = ({ user, isAuthorizedUser }) => {
+export const Basket = () => {
   const navigate = useNavigate();
   setDefaultOptions({ locale: ru });
 
   const dispatch = useDispatch<AppDispatch>();
-  const userOrders = useSelector((state: RootState) => state.ordersByUserID.orders);
+  const userOrders = useSelector((state: RootState) => state.orders.ordersByUserID.orders);
+  const user = useSelector((state: RootState) => state.authorizedUser.user);
+  const isAuthorizedUser = useSelector((state: RootState) => state.authorizedUser.isAuthorized);
 
   useEffect(() => {
     if (!isAuthorizedUser) {
@@ -35,7 +36,7 @@ export const Basket: React.FC<IUserContext> = ({ user, isAuthorizedUser }) => {
   if (!isAuthorizedUser) {
     return (
       <>
-        <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+        <Header />
         <div className={styles.basket}>
           <p className={styles.unauthorized}>Необходимо авторизоваться. Перенаправление...</p>
         </div>
@@ -45,7 +46,7 @@ export const Basket: React.FC<IUserContext> = ({ user, isAuthorizedUser }) => {
   }
   return (
     <>
-      <UserContext.Consumer>{value => <Header {...value} />}</UserContext.Consumer>
+      <Header />
       <div className={styles.basket}>
         <h1 className={styles.title}>Мои заказы</h1>
 
